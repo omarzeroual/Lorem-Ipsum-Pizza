@@ -16,14 +16,20 @@
 	#$link = mysqli_connect('localhost', 'root', 'root');
 	$link = mysqli_connect($db_position , $db_benutzername , $db_passwort  );
 	
+    #Verbindung konnte nicht aufgebaut werden
 	if (!$link)
 	{
 		echo "<p> Verbindung fehlgeschlagen</p>";
 	}
 	
+    #Verbindung konnte aufgebaut werden
 	if ($link)
 	{
-		echo "<p> Verbindung erfolgreich</p>";
+        
+        if (!empty($_POST["einloggen"]))
+            echo "<p>Eingabe getätigt";
+		
+        
 	}
 
 ?>
