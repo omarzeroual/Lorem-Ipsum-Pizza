@@ -20,6 +20,11 @@
 	{
 		echo "<p> Verbindung fehlgeschlagen</p>";
 	}
+	
+	if ($link)
+	{
+		echo "<p> Verbindung erfolgreich</p>";
+	}
 
 ?>
 </body>
