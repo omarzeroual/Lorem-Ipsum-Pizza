@@ -83,7 +83,7 @@
                     #Verbindung konnte aufgebaut werden
                     if ($link)
                     {
-                        $cursor = mysqli_query = ($link, $sql);
+                        $cursor = mysqli_query($link, $sql);
                         
                         if (!$cursor)
                         {
