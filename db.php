@@ -64,7 +64,7 @@
         
             if ($sqlAnzahl > 0)
             {
-                echo "<p> great success";
+                include 'mutation.html';
             } else {
                 echo "<p> not found";
             } 
