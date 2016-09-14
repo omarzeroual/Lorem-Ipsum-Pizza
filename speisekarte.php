@@ -91,10 +91,10 @@
                         else {
                             $count = mysqli_num_rows($cursor);
                             
-                            echo "<p>funktioniert! Count " . $count . " 16:20</p>";
+                            echo "<p>funktioniert! Count " . $count . " 16:22</p>";
                             echo "<br>";
                             while($row = mysqli_fetch_assoc($cursor)){
-                                echo "<p>" . $row[p.bezeichnung] . "</p>";
+                                print $row;
                             }
                         }
                     }
