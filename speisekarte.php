@@ -67,7 +67,7 @@
                 
                     # Aufbauen der Datenbank Verbindung
                     #$link = mysqli_connect('localhost', 'root', 'root');
-                    $link = mysqli_connect($db_position , $db_benutzername , $db_passwort, $db_datenbank  );
+                    $link = mysqli_connect($db_position , $db_benutzername , 'pi$$a', $db_datenbank  );
                     
                 
                     #Verbindung konnte nicht aufgebaut werden
