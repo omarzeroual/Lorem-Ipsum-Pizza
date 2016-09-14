@@ -67,7 +67,7 @@
                 
                     # Aufbauen der Datenbank Verbindung
                     #$link = mysqli_connect('localhost', 'root', 'root');
-                    $link = mysqli_connect($db_position , $db_benutzername , $db_passwort, $db_datenbank  );
+                    $link = mysqli_connect($db_position , $db_benutzername , 'pi$$a', $db_datenbank  );
                     
                 
                     #Verbindung konnte nicht aufgebaut werden
@@ -78,12 +78,13 @@
                     
                     $sql = "SELECT k.bezeichnung, k.beschreibung, p.bezeichnung, p.beschreibung, p.preis,       p.groesse
                             FROM tbl_produkte AS p JOIN tbl_kategorie AS k
-                            WHERE p.aktiv_flag = 1";
+                            WHERE p.aktiv_flag = 1
+                            ORDER BY k.ID ASC, p.preis DESC";
                     
                     #Verbindung konnte aufgebaut werden
                     if ($link)
                     {
-                        $cursor = mysqli_query = ($link, $sql);
+                        $cursor = mysqli_query($link, $sql);
                         
                         if (!$cursor)
                         {
