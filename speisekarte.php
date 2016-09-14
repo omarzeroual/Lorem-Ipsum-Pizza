@@ -82,17 +82,18 @@
                             ORDER BY k.ID ASC, p.preis DESC";
                     
                     #Verbindung konnte aufgebaut werden
-                    if ($link)
-                    {
+                    if ($link) {
                         $cursor = mysqli_query($link, $sql);
                         
-                        if (!$cursor)
-                        {
+                        if (!$cursor) {
                             echo "<p> Query fehlgeschlagen</p>";   
                         }
-                        else
-                        {
-                            echo "<p>funktioniert!<p>"; 
+                        else {
+                            echo "<p>funktioniert!</p>";
+                            echo "<br>";
+                            while($row = mysqli_fetch_assoc($cursor)){
+                                echo "<p>" . $row[p.bezeichnung] . "</p>";
+                            }
                         }
                     }
                     ?>
