@@ -64,7 +64,7 @@
         
             if ($sqlAnzahl > 0)
             {
-                include 'mutation.html';
+                include '../html/mutation.html';
             } else {
                 echo "<p> not found";
             } 
