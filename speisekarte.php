@@ -78,7 +78,8 @@
                     
                     $sql = "SELECT k.bezeichnung, k.beschreibung, p.bezeichnung, p.beschreibung, p.preis,       p.groesse
                             FROM tbl_produkte AS p JOIN tbl_kategorie AS k
-                            WHERE p.aktiv_flag = 1";
+                            WHERE p.aktiv_flag = 1
+                            ORDER BY k.ID ASC, p.preis DESC";
                     
                     #Verbindung konnte aufgebaut werden
                     if ($link)
