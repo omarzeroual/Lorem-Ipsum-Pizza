@@ -89,7 +89,9 @@
                             echo "<p> Query fehlgeschlagen</p>";   
                         }
                         else {
-                            echo "<p>funktioniert!</p>";
+                            $count = mysqli_num_rows($cursor);
+                            
+                            echo "<p>funktioniert! Count " . $count . " 16:20</p>";
                             echo "<br>";
                             while($row = mysqli_fetch_assoc($cursor)){
                                 echo "<p>" . $row[p.bezeichnung] . "</p>";
