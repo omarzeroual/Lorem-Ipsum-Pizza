@@ -72,8 +72,32 @@
                         <input type="number" class="form-control" name="preis" id="preis">
                     </div>
                     <div class="form-group">
-                        <label for="text">Produkt-Kategorie</label>
-                        <input type="text" class="form-control" name="kategorie" id="preis">
+                        <label for="kategorie">Produkt-Kategorie</label>
+                        <select class="form-control" id="kategorie">
+                        <?php
+                        	# Rechner, auf dem sich die DB befindet
+	                       $db_position = 'localhost';
+	                       $db_datenbank = 'loremipsum-pizza';
+	                       # Anmeldedaten
+	                       $db_benutzername  = 'loremipsum-pizza';
+	                       $db_passwort  = 'pi$$a';
+                        
+                        $link = mysqli_connect($db_position , $db_benutzername , 'pi$$a', $db_datenbank  );
+                        if ($link)
+                        {
+                            $sqlResultat = mysqli_query($link,"SELECT bezeichnung
+                                           FROM tbl_kategorie
+                                           WHERE aktiv_flag = '1'");
+            
+                            $sqlAnzahl = mysqli_num_rows($sqlResultat);
+                            while ($row = mysqli_fetch_row($sqlResultat))
+                            {
+                                echo "<option>$row[0]</option>";
+                            }
+                        }
+                        ?>    
+                        
+                        </select>    
                     </div>
                     <label for="text">Ist das Produkt eine Aktion?</label>
                     <div class="radio">
@@ -84,7 +108,7 @@
                     </div>
                     <div class="form-group">
                         <label for="text">Aktions-Preis</label>
-                        <input type="number" class="form-control" name="aktionspreis" id="aktionspreis">
+                        <input type="number" class="form-control" name="aktionspreis" id="preis">
                     </div>
                     
 

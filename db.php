@@ -49,8 +49,9 @@
 
         if ($db_valid_input == true)
         {
+            
             $passwort = md5($salt.$passwort);
-
+            
           
         # SQL Query für die DB-Abfrage
             
@@ -64,7 +65,7 @@
         
             if ($sqlAnzahl > 0)
             {
-                include '../html/mutation.html';
+                include 'mutation_site.php';
             } else {
                 echo "<p> not found";
             } 
