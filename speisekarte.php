@@ -76,24 +76,41 @@
                         echo "<p> Verbindung fehlgeschlagen</p>";
                     }
                     
-                    $sql = "SELECT k.bezeichnung, k.beschreibung, p.bezeichnung, p.beschreibung, p.preis,       p.groesse
+                    $sqlProduce = "SELECT k.bezeichnung, k.beschreibung, p.bezeichnung, p.beschreibung,         p.preis, p.groesse
                             FROM tbl_produkte AS p JOIN tbl_kategorie AS k
                             WHERE p.aktiv_flag = 1
-                            ORDER BY k.ID ASC, p.preis DESC";
+                            ORDER BY k.ID ASC, p.preis DESC;";
+                
+                    $sqlCategory = "SELECT k.bezeichnung
+                                    FROM tbl_kategorie AS k
+                                    WHERE k.aktiv_flag = 1;";
                     
                     #Verbindung konnte aufgebaut werden
                     if ($link) {
-                        $cursor = mysqli_query($link, $sql);
+                        $cursorCategory = mysqli_query($link, sqlCategory);
                         
-                        if (!$cursor) {
-                            echo "<p> Query fehlgeschlagen</p>";   
-                        }
-                        else {
-                            $count = mysqli_num_rows($cursor);
+                        if (!$cursorCategory) {
+                            echo "<p>Kategorie Query fehlgeschlagen</p>";  
+                        } else {
+                            $countCategory = mysqli_num_rows($cursorCategory);
                             
-                            echo "<p>funktioniert! Count " . $count . " 16:22</p>";
+                            echo "<p>Kategorie Query funktioniert! Count: " . $countCategory . "</p>";
                             echo "<br>";
-                            while($row = mysqli_fetch_assoc($cursor)){
+                            while($row = mysqli_fetch_assoc($cursorCategory)) {
+                                print $row;
+                            }
+                        }
+                        
+                        $cursorProduce = mysqli_query($link, $sqlProduce);
+                        
+                        if (!$cursorProduce) {
+                            echo "<p>Produkt Query fehlgeschlagen</p>";   
+                        } else {
+                            $countProduce = mysqli_num_rows($cursorProduce);
+                            
+                            echo "<p>Produkt Query funktioniert! Count: " . $countProduce . "</p>";
+                            echo "<br>";
+                            while($row = mysqli_fetch_assoc($cursorProduce)){
                                 print $row;
                             }
                         }
