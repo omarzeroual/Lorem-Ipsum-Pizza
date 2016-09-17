@@ -97,7 +97,7 @@
                             echo "<p>Kategorie Query funktioniert! Count: " . $countCategory . "</p>";
                             echo "<br>";
                             while($row = mysqli_fetch_assoc($cursorCategory)) {
-                                print $row;
+                                print_r($row);
                             }
                         }
                         
@@ -111,7 +111,7 @@
                             echo "<p>Produkt Query funktioniert! Count: " . $countProduce . "</p>";
                             echo "<br>";
                             while($row = mysqli_fetch_assoc($cursorProduce)){
-                                print $row;
+                                print_r($row);
                             }
                         }
                     }
