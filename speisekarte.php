@@ -87,7 +87,7 @@
                     
                     #Verbindung konnte aufgebaut werden
                     if ($link) {
-                        $cursorCategory = mysqli_query($link, sqlCategory);
+                        $cursorCategory = mysqli_query($link, $sqlCategory);
                         
                         if (!$cursorCategory) {
                             echo "<p>Kategorie Query fehlgeschlagen</p>";  
