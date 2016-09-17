@@ -16,7 +16,7 @@
     <!-- Latest compiled JavaScript -->
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
     
 	<title>Lorem Ipsum Pizzakurier: Speisekarte</title>
 </head>
@@ -37,13 +37,13 @@
             </div>
             <div class="collapse navbar-collapse" id="mainNav">
                 <ul class="nav navbar-nav">
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="../index.html">Home</a></li>
                     <li class="active"><a href="#">Speisekarte</a></li>      
                     <li><a href="#">Bestellen</a></li>
                     <li><a href="#">Impressum</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="form.html">Login</a></li>
+                    <li><a href="../html/admin_login.html">Login</a></li>
                 </ul>
             </div>
         </div>
@@ -76,44 +76,99 @@
                         echo "<p> Verbindung fehlgeschlagen</p>";
                     }
                     
-                    $sqlProduce = "SELECT k.bezeichnung, k.beschreibung, p.bezeichnung, p.beschreibung,         p.preis, p.groesse
-                            FROM tbl_produkte AS p JOIN tbl_kategorie AS k
+                    # SQL Abfrage, um die verfügbaren Produkte, nach Kategorie-ID und Produktpreis sortiert, zu erhalten.
+                    $sqlProduce = "SELECT k.bezeichnung AS kBez, k.beschreibung AS kBes, p.bezeichnung AS pBez, p.beschreibung pBes, p.preis, p.groesse
+                            FROM tbl_produkte AS p LEFT JOIN tbl_kategorie AS k
+                            ON p.fk_kategorie = k.ID
                             WHERE p.aktiv_flag = 1
-                            ORDER BY k.ID ASC, p.preis DESC;";
-                
+                            ORDER BY k.ID ASC, p.preis ASC;";
+                    
+                    # SQL Abfrage, um die aktiven Kategorien auszugeben.
                     $sqlCategory = "SELECT k.bezeichnung
                                     FROM tbl_kategorie AS k
                                     WHERE k.aktiv_flag = 1;";
                     
                     #Verbindung konnte aufgebaut werden
                     if ($link) {
+                        
+                        # Cursor für Kategorie Abfrage
                         $cursorCategory = mysqli_query($link, $sqlCategory);
                         
-                        if (!$cursorCategory) {
-                            echo "<p>Kategorie Query fehlgeschlagen</p>";  
-                        } else {
-                            $countCategory = mysqli_num_rows($cursorCategory);
+                        # Cursor funktioniert
+                        if ($cursorCategory) {
                             
-                            echo "<p>Kategorie Query funktioniert! Count: " . $countCategory . "</p>";
-                            echo "<br>";
+                            # Gruppenwechsel initialisieren
+                            $kategorie = '';
+                            
+                            echo '<p>Kategorien:</p>';
+                            echo '<div class="btn-group" role="group">';     
+                            
+                            # Cursor iterieren
                             while($row = mysqli_fetch_assoc($cursorCategory)) {
-                                print_r($row);
+                                
+                                # Ein Button je Kategorie generieren
+                                if ($kategorie !== $row['bezeichnung']) {
+                                    echo '<a class="btn btn-default" href="#kat' .$row['bezeichnung']. '" role="button">' .$row['bezeichnung']. '</a>';
+                                }
+                                
                             }
+                            
+                            echo '</div>';
+                            echo '<br><br>';
+                            
                         }
                         
+                        # Cursor für Produktabfrgae
                         $cursorProduce = mysqli_query($link, $sqlProduce);
                         
-                        if (!$cursorProduce) {
-                            echo "<p>Produkt Query fehlgeschlagen</p>";   
-                        } else {
-                            $countProduce = mysqli_num_rows($cursorProduce);
+                        # Cursor funktioniert
+                        if ($cursorProduce) {
                             
-                            echo "<p>Produkt Query funktioniert! Count: " . $countProduce . "</p>";
-                            echo "<br>";
-                            while($row = mysqli_fetch_assoc($cursorProduce)){
-                                print_r($row);
+                            # Gruppenwechsel initialisieren
+                            $kategorie = '';
+                            
+                            # Cursor iterieren
+                            while($row = mysqli_fetch_assoc($cursorProduce)) {              
+                                
+                                # Nicht erste Gruppe und Gruppenwechsel
+                                if ($kategorie !== $row['kBez'] and $kategorie !== '') {
+                                    echo '</ul>';
+                                    echo '</div>';
+                                }
+                                
+                                # Bei Gruppenwechsel neues Panel generieren
+                                if ($kategorie !== $row['kBez']) {
+                                    echo '<div class="panel panel-default">';
+                                
+                                    echo '<div class="panel-heading">';
+                                    echo '<h3 id="kat' .$row["kBez"]. '">' .$row["kBez"]. '</h3>';
+                                    echo '</div>';
+                                
+                                    echo '<div class="panel-body">';
+                                    echo $row["kBes"];
+                                    echo '</div>';
+                                
+                                    echo '<ul class="list-group">';
+                                    
+                                    $kategorie = $row['kBez'];
+                                }
+                                
+                                # Produkte ausgeben
+                                echo '<li class="list-group-item">';
+                                echo '<p>' .$row["pBez"]. ' ' .$row["groesse"]. '&emsp;' .$row["preis"]. '.-</p>';
+                                echo '<p class="small">' .$row["pBes"]. '</p>';
+                                echo '</li>';                                    
+                                
+                                # Gruppenwechselvariable aktualisieren
+                                $kategorie = $row["kBez"];
                             }
+                            
+                            echo '</ul>';
+                            echo '</div>';
+                            
                         }
+                    } else {
+                        echo '<p>Verbindung zu DB fehlgeschlagen</p>';
                     }
                     ?>
                 
