@@ -21,33 +21,7 @@
 	<title>Lorem Ipsum Pizzakurier</title>
 </head>
 <body>
-    
-    <!-- Kopfzeile -->
-    <div class="page-header">
-        <h1>Lorem Ipsum <small>Pizzakurier</small></h1>
-    </div>
-    
-    <!-- Hauptnavigation -->
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNav">
-                    <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
-                </button>
-            </div>
-            <div class="collapse navbar-collapse" id="mainNav">
-                <ul class="nav navbar-nav">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="speisekarte.html">Speisekarte</a></li>      
-                    <li><a href="#">Bestellen</a></li>
-                    <li><a href="#">Impressum</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="active"><a href="admin_login.html">Login</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+
     
     <!-- Hauptinhalt -->
     <div class="container">
@@ -104,7 +78,7 @@
                         <label><input type="radio" name="radio-wert" value="Ja">Ja</label>
                     </div>
                     <div class="radio">
-                        <label><input type="radio" name="radio-wert" value="Nein">Nein</label>
+                        <label><input type="radio" name="radio-wert" value="Nein" checked>Nein</label>
                     </div>
                     <div class="form-group">
                         <label for="text">Aktions-Preis</label>
