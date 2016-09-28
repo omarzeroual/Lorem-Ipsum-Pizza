@@ -21,7 +21,7 @@ CREATE TABLE `loremipsum-pizza`.`tbl_benutzer` (
   `benutzername` VARCHAR(45) NULL,
   `hash` VARCHAR(128) NULL,
   PRIMARY KEY (`ID`))
-ENGINE = InnoDB;
+ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 -- -Tabelle mit Produkte-Kategorien
 
@@ -34,7 +34,7 @@ CREATE TABLE `loremipsum-pizza`.`tbl_kategorie` (
   `reihenfolge` INT(11) NULL,
   PRIMARY KEY (`ID`),
   UNIQUE INDEX `PK_UNIQUE` (`ID` ASC))
-ENGINE = InnoDB;
+ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 -- Tabelle mit Kontaktinformationen der
 -- Bestellungen
@@ -48,7 +48,7 @@ CREATE TABLE `loremipsum-pizza`.`tbl_kontaktinformationen` (
   `lieferadresse` VARCHAR(128) NULL,
   PRIMARY KEY (`ID`),
   UNIQUE INDEX `ID_UNIQUE` (`ID` ASC))
-ENGINE = InnoDB;
+ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 -- Tabelle mit den einzelnen Produkten
 -- (Speisekarte)
@@ -71,7 +71,7 @@ CREATE TABLE `loremipsum-pizza`.`tbl_produkte` (
     REFERENCES `loremipsum-pizza`.`tbl_kategorie` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB DEFAULT CHARSET=utf8;;
 
 -- Zwischentabelle zum erfassen der 
 -- Produkte innerhalb einer Bestellung
@@ -94,7 +94,7 @@ CREATE TABLE `loremipsum-pizza`.`tbl_bestellung_produkt` (
     REFERENCES `loremipsum-pizza`.`tbl_produkte` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 
 

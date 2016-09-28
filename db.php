@@ -36,8 +36,8 @@
             </div>
             <div class="collapse navbar-collapse" id="mainNav">
                 <ul class="nav navbar-nav">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="speisekarte.html">Speisekarte</a></li>      
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="speisekarte.php">Speisekarte</a></li>      
                     <li><a href="#">Bestellen</a></li>
                     <li><a href="#">Impressum</a></li>
                 </ul>
