@@ -53,7 +53,7 @@
     <div class="container">
         <h2>Speisekarte</h2>
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-8">
                 
                 <?php
                     
@@ -108,7 +108,7 @@
                                 
                                 # Ein Button je Kategorie generieren
                                 if ($kategorie !== $row['bezeichnung']) {
-                                    echo '<a class="btn btn-default" href="#kat' .$row['bezeichnung']. '" role="button">' .$row['bezeichnung']. '</a>';
+                                    echo '<a class="btn btn-default" href="#kat' .utf8_encode($row['bezeichnung']). '" role="button">' .utf8_encode($row['bezeichnung']). '</a>';
                                 }
                                 
                             }
@@ -141,11 +141,11 @@
                                     echo '<div class="panel panel-default">';
                                 
                                     echo '<div class="panel-heading">';
-                                    echo '<h3 id="kat' .$row["kBez"]. '">' .$row["kBez"]. '</h3>';
+                                    echo '<h3 id="kat' .utf8_encode($row["kBez"]). '">' .utf8_encode($row["kBez"]). '</h3>';
                                     echo '</div>';
                                 
                                     echo '<div class="panel-body">';
-                                    echo $row["kBes"];
+                                    echo utf8_encode($row["kBes"]);
                                     echo '</div>';
                                 
                                     echo '<ul class="list-group">';
@@ -155,8 +155,8 @@
                                 
                                 # Produkte ausgeben
                                 echo '<li class="list-group-item">';
-                                echo '<p>' .$row["pBez"]. ' ' .$row["groesse"]. '&emsp;' .$row["preis"]. '.-</p>';
-                                echo '<p class="small">' .$row["pBes"]. '</p>';
+                                echo '<p>' .utf8_encode($row["pBez"]). ' ' .utf8_encode($row["groesse"]). '&emsp;' .$row["preis"]. '.-</p>';
+                                echo '<p class="small">' .utf8_encode($row["pBes"]). '</p>';
                                 echo '</li>';                                    
                                 
                                 # Gruppenwechselvariable aktualisieren
@@ -173,6 +173,7 @@
                     ?>
                 
             </div>
+            <div class="col-sm-4"></div>
         </div>
         <!-- Platzhalter, damit Button in mobile nicht verschwindet -->
         <div class="row">
