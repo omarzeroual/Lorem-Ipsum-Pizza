@@ -21,40 +21,14 @@
 	<title>Lorem Ipsum Pizzakurier</title>
 </head>
 <body>
-    
-    <!-- Kopfzeile -->
-    <div class="page-header">
-        <h1>Lorem Ipsum <small>Pizzakurier</small></h1>
-    </div>
-    
-    <!-- Hauptnavigation -->
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNav">
-                    <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
-                </button>
-            </div>
-            <div class="collapse navbar-collapse" id="mainNav">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="index.html">Home</a></li>
-                    <li><a href="speisekarte.html">Speisekarte</a></li>      
-                    <li><a href="#">Bestellen</a></li>
-                    <li><a href="#">Impressum</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="admin_login.html">Login</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+
     
     <!-- Hauptinhalt -->
     <div class="container">
         <h2>Produkt in die Speisekarte aufnehmen</h2>
         <div class="row">
             <div class="col-sm-7">
-                <form class="form-horizontal" method="POST" action="../php/db.php">
+                <form method="POST" action="mutation_php.php">
                     <div class="form-group">
                         <label for="text">Produkt-Bezeichnung</label>
                         <input type="text" class="form-control" name="bezeichnung" id="bezeichnung">
@@ -73,7 +47,7 @@
                     </div>
                     <div class="form-group">
                         <label for="kategorie">Produkt-Kategorie</label>
-                        <select class="form-control" id="kategorie">
+                        <select class="form-control" id="kategorie" name="kategorie">
                         <?php
                         	# Rechner, auf dem sich die DB befindet
 	                       $db_position = 'localhost';
@@ -101,14 +75,14 @@
                     </div>
                     <label for="text">Ist das Produkt eine Aktion?</label>
                     <div class="radio">
-                        <label><input type="radio" name="radio-wert">Ja</label>
+                        <label><input type="radio" name="radio-wert" value="Ja">Ja</label>
                     </div>
                     <div class="radio">
-                        <label><input type="radio" name="radio-wert">Nein</label>
+                        <label><input type="radio" name="radio-wert" value="Nein" checked>Nein</label>
                     </div>
                     <div class="form-group">
                         <label for="text">Aktions-Preis</label>
-                        <input type="number" class="form-control" name="aktionspreis" id="preis">
+                        <input type="number" class="form-control" name="aktionspreis" id="aktionspreis">
                     </div>
                     
 
