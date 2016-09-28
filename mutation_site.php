@@ -21,6 +21,32 @@
 	<title>Lorem Ipsum Pizzakurier</title>
 </head>
 <body>
+    
+    <!-- Kopfzeile -->
+    <div class="page-header">
+        <h1>Lorem Ipsum <small>Pizzakurier</small></h1>
+    </div>
+    <!-- Hauptnavigation -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNav">
+                    <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="nav navbar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="speisekarte.php">Speisekarte</a></li>      
+                    <li><a href="#">Bestellen</a></li>
+                    <li><a href="#">Impressum</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="admin_login.html">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     
     <!-- Hauptinhalt -->
@@ -88,7 +114,9 @@
                     </div>
                     
 
-                <button type="submit" class="btn btn-default" name="einfuegen">einfügen</button>
+                      <button type="submit" class="btn btn-primary" name="einfuegen">Einfügen</button>
+                      <a href="mutation_site.php" class="btn btn-primary" role="button" name="leeren">Formular leeren</a>
+
             </form>
             </div>
             <!-- Bestell-Button, um Bestellvorgang aufzurufen -->

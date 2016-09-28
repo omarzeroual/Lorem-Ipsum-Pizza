@@ -261,7 +261,9 @@ $db_benutzername  = 'loremipsum-pizza';
                                         </div>
 
 
-                                    <button type="submit" class="btn btn-default" name="einfuegen">einfügen</button>
+                                <button type="submit" class="btn btn-primary" name="einfuegen">Einfügen</button>
+                                <a href="mutation_site.php" class="btn btn-primary" role="button" name="leeren">Formular leeren</a>
+
                                 </form>
                                 </div>
                                 <!-- Bestell-Button, um Bestellvorgang aufzurufen -->
@@ -377,6 +379,7 @@ $db_benutzername  = 'loremipsum-pizza';
 
             }
         } else {
+            
         
         ?>
                 <!-- Hauptinhalt -->
@@ -462,7 +465,9 @@ $db_benutzername  = 'loremipsum-pizza';
                     </div>
                     
 
-                <button type="submit" class="btn btn-default" name="einfuegen">einfügen</button>
+                    <button type="submit" class="btn btn-primary" name="einfuegen">Einfügen</button>
+                    <a href="mutation_site.php" class="btn btn-primary" role="button" name="leeren">Formular leeren</a>
+
             </form>
             </div>
             <!-- Bestell-Button, um Bestellvorgang aufzurufen -->
