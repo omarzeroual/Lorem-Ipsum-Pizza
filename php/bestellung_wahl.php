@@ -56,140 +56,63 @@
             <div class="col-sm-8">
                 
                 <?php
-                    
-                    #### Variablen ####
-                    # Rechner, auf dem sich die DB befindet
-                    $db_position = 'localhost';
-                    $db_datenbank = 'loremipsum-pizza';
-                    # Anmeldedaten
-                    $db_benutzername  = 'loremipsum-pizza';
-                    $db_passwort  = 'pi$$a';
+                    # Sesssion starten
+                    #session_start();
                 
-                    # Aufbauen der Datenbank Verbindung
-                    #$link = mysqli_connect('localhost', 'root', 'root');
-                    $link = mysqli_connect($db_position , $db_benutzername , 'pi$$a', $db_datenbank  );
-                    
-                
-                    #Verbindung konnte nicht aufgebaut werden
-                    if (!$link)
-                    {
-                        echo "<p> Verbindung fehlgeschlagen</p>";
-                    }
-                    
-                    # SQL Abfrage, um die verfügbaren Produkte, nach Kategorie-ID und Produktpreis sortiert, zu erhalten.
-                    $sqlProduce = "SELECT k.bezeichnung AS kBez, k.beschreibung AS kBes, p.ID AS pID, p.bezeichnung AS pBez, p.beschreibung AS pBes, p.preis, p.groesse
-                            FROM tbl_produkte AS p LEFT JOIN tbl_kategorie AS k
-                            ON p.fk_kategorie = k.ID
-                            WHERE p.aktiv_flag = 1
-                            ORDER BY k.ID ASC, p.preis ASC;";
-                    
-                    # SQL Abfrage, um die aktiven Kategorien auszugeben.
-                    $sqlCategory = "SELECT k.bezeichnung
-                                    FROM tbl_kategorie AS k
-                                    WHERE k.aktiv_flag = 1;";
-                    
-                    #Verbindung konnte aufgebaut werden
-                    if ($link) {
+                    if (empty($_POST)) {         
                         
-                        # Cursor für Kategorie Abfrage
-                        $cursorCategory = mysqli_query($link, $sqlCategory);
+                        # Definiere Art der Auswahl Generierung, ob Speisekarte oder Auswahl-Formular
+                        $vonBestellung = true;
+                        $vonSpeisekarte = false;
+                        # Ansicht generieren
+                        include "generateAuswahl.php";
                         
-                        # Cursor funktioniert
-                        if ($cursorCategory) {
-                            
-                            # Gruppenwechsel initialisieren
-                            $kategorie = '';
-                            
-                            $textBestellung = 'Wählen Sie von unserem reichhaltigem & feinem Sortiment aus. Im Eingabefeld können Sie die gewünschte Menge angeben. Mit "weiter" können Sie zur Angabe Ihrer persönlichen Daten fortfahren.';
-                            
-                            echo '<p>' .$textBestellung. '</p>';
-                            echo '<br><p>Kategorien:</p>';
-                            echo '<div class="btn-group" role="group">';     
-                            
-                            # Cursor iterieren
-                            while($row = mysqli_fetch_assoc($cursorCategory)) {
-                                
-                                # Ein Button je Kategorie generieren
-                                if ($kategorie !== $row['bezeichnung']) {
-                                    echo '<a class="btn btn-default" href="#kat' .utf8_encode($row['bezeichnung']). '" role="button">' .utf8_encode($row['bezeichnung']). '</a>';
-                                }
-                                
-                            }
-                            
-                            echo '</div>';
-                            echo '<br><br>';
-                            
-                        }
-                        
-                        # Cursor für Produktabfrgae
-                        $cursorProduce = mysqli_query($link, $sqlProduce);
-                        
-                        # Cursor funktioniert
-                        if ($cursorProduce) {
-                            
-                            # Gruppenwechsel initialisieren
-                            $kategorie = '';
-                            
-                            echo '<form action="' .htmlspecialchars($_SERVER['PHP_SELF']). '" method="post">';
-                            
-                            # Cursor iterieren
-                            while($row = mysqli_fetch_assoc($cursorProduce)) {              
-                                
-                                # Initialisieren der dynamischen "$value{pID}" Variablen
-                                ${'value' .$row['pID']} = 0;
-                                
-                                # Nicht erste Gruppe und Gruppenwechsel
-                                if ($kategorie !== $row['kBez'] and $kategorie !== '') {
-                                    echo '</ul>';
-                                    echo '</div>';
-                                }
-                                
-                                # Bei Gruppenwechsel neues Panel generieren
-                                if ($kategorie !== $row['kBez']) {
-                                    echo '<div class="panel panel-default">';
-                                
-                                    echo '<div class="panel-heading">';
-                                    echo '<h3 id="kat' .utf8_encode($row["kBez"]). '">' .utf8_encode($row["kBez"]). '</h3>';
-                                    echo '</div>';
-                                
-                                    echo '<div class="panel-body">';
-                                    echo utf8_encode($row["kBes"]);
-                                    echo '</div>';
-                                
-                                    echo '<ul class="list-group">';
-                                    
-                                    $kategorie = $row['kBez'];
-                                }
-                                
-                                # Produkte ausgeben
-                                echo '<li class="list-group-item">';
-                                echo '<div class="form-group">';
-                                echo '<input type="number" min="0" class="form-control" id="inputAuswahl" ';
-                                echo 'name="' .$row["pID"]. '" value="' .${'value' .$row["pID"]}. '">';
-                                echo '<p>' .utf8_encode($row["pBez"]). ' ' .utf8_encode($row["groesse"]). '&emsp;' .$row["preis"]. ' Fr.</p>';
-                                echo '<p class="small">' .utf8_encode($row["pBes"]). '</p>';
-                                echo '</div>';                                
-                                echo '</li>';                                    
-                                
-                                # Gruppenwechselvariable aktualisieren
-                                $kategorie = $row["kBez"];
-                            }
-                            
-                            echo '</ul>';
-                            echo '</div>';
-                            echo '<button type="submit" class="btn btn-default" id="submitForm">Weiter</button>';
-                            echo '</form>';
-                            
-                        }
                     } else {
-                        echo '<p>Verbindung zu DB fehlgeschlagen</p>';
+                        
+                        print_r($_POST);
+                        
+                        # Fehler zurücksetzen
+                        $keineAuswahlFehler = false;
+                        $formatFehler = false;
+                        
+                        # Zähler, um Anzahl Nullwerte festzuhalten
+                        $counterNullwert = 0;
+                        # Zahlenformat für Validierung
+                        $format = '/\d/';
+                        echo count($_POST);
+                        
+                        foreach ($_POST as $pID => $menge) {
+                            if ($menge == '0') {
+                                unset($_POST[$pID]);
+                                $counterNullwert += 1;
+                            } else {
+                                if (!preg_match($format, $menge)) {
+                                    $formatFehler = true;
+                                    echo '!preg_match';
+                                }
+                            }
+                        }
+                        
+                        # Überprüfung, ob überhaupt etwas angewählt wurde
+                        if (count($_POST) == 0) {
+                            $keineAuswahlFehler = true;
+                        }
+
+                        # Definiere Art der Auswahl Generierung, ob Speisekarte oder Auswahl-Formular
+                        $vonBestellung = true;
+                        $vonSpeisekarte = false;
+                        # Ansicht generieren
+                        include "generateAuswahl.php";
+                        
+                        echo '<p>Forumlar geschickt!</p>';
+                        echo '<p>Nullwerte gelöscht: ' .$counterNullwert. '</p>';
+                        echo '<p>Array Grösse: ' .count($_POST). '</p>';
+                        print_r($_POST);
                     }
                     ?>
                 
             </div>
-            <div class="col-sm-4">
-                <button for="submitForm">Weiter</button>
-            </div>
+            <div class="col-sm-4"></div>
         </div>
         <!-- Platzhalter, damit Button in mobile nicht verschwindet -->
         <div class="row">
