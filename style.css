@@ -6,3 +6,18 @@
     /* margin-bottom: 70px; */
     height: 62px;
 }
+
+#inputAuswahl {
+    width: 65px;
+    float: left;
+    margin-right: 20px;
+    /*margin-top: 7px;*/
+}
+
+.form-group p.small {
+    padding-left: 85px;
+}
+
+.form-group p {
+    padding-top: 7px;
+}
