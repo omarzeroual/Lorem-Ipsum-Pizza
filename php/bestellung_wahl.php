@@ -56,7 +56,8 @@
             <div class="col-sm-8">
                 
                 <?php
-                    
+                    if (empty($_POST)) {         
+                
                     #### Variablen ####
                     # Rechner, auf dem sich die DB befindet
                     $db_position = 'localhost';
@@ -184,12 +185,15 @@
                     } else {
                         echo '<p>Verbindung zu DB fehlgeschlagen</p>';
                     }
+                        
+                    } else {
+                        echo '<p>Forumlar geschickt!</p>';
+                        print_r($_POST);
+                    }
                     ?>
                 
             </div>
-            <div class="col-sm-4">
-                <button for="submitForm">Weiter</button>
-            </div>
+            <div class="col-sm-4"></div>
         </div>
         <!-- Platzhalter, damit Button in mobile nicht verschwindet -->
         <div class="row">
