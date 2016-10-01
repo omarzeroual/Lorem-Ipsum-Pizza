@@ -16,11 +16,37 @@
     <!-- Latest compiled JavaScript -->
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="..\css\style.css">
     
 	<title>Lorem Ipsum Pizzakurier</title>
 </head>
 <body>
+    
+    <!-- Kopfzeile -->
+    <div class="page-header">
+        <h1>Lorem Ipsum <small>Pizzakurier</small></h1>
+    </div>
+    <!-- Hauptnavigation -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNav">
+                    <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="nav navbar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="speisekarte.php">Speisekarte</a></li>      
+                    <li><a href="#">Bestellen</a></li>
+                    <li><a href="#">Impressum</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="admin_login.html">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     
     <!-- Hauptinhalt -->
@@ -43,7 +69,7 @@
                     </div>
                     <div class="form-group">
                         <label for="text">Preis</label>
-                        <input type="number" class="form-control" name="preis" id="preis">
+                        <input type="number" min="1" step="0.05" class="form-control" name="preis" id="preis">
                     </div>
                     <div class="form-group">
                         <label for="kategorie">Produkt-Kategorie</label>
@@ -66,7 +92,9 @@
                             $sqlAnzahl = mysqli_num_rows($sqlResultat);
                             while ($row = mysqli_fetch_row($sqlResultat))
                             {
-                                echo "<option>$row[0]</option>";
+                                $auswahl = $row[0];
+                                $auswahl = utf8_encode($auswahl);
+                                echo "<option>$auswahl</option>";
                             }
                         }
                         ?>    
@@ -82,11 +110,13 @@
                     </div>
                     <div class="form-group">
                         <label for="text">Aktions-Preis</label>
-                        <input type="number" class="form-control" name="aktionspreis" id="aktionspreis">
+                        <input type="number" min="1" step="0.05" class="form-control" name="aktionspreis" id="aktionspreis">
                     </div>
                     
 
-                <button type="submit" class="btn btn-default" name="einfuegen">einfügen</button>
+                      <button type="submit" class="btn btn-primary" name="einfuegen">Einfügen</button>
+                      <a href="mutation_site.php" class="btn btn-primary" role="button" name="leeren">Formular leeren</a>
+
             </form>
             </div>
             <!-- Bestell-Button, um Bestellvorgang aufzurufen -->

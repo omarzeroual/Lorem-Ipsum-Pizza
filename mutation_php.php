@@ -16,7 +16,7 @@
     <!-- Latest compiled JavaScript -->
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="..\css\style.css">
     
 	<title>Lorem Ipsum Pizzakurier</title>
 </head>
@@ -37,13 +37,13 @@
             </div>
             <div class="collapse navbar-collapse" id="mainNav">
                 <ul class="nav navbar-nav">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="speisekarte.html">Speisekarte</a></li>      
+                    <li><a href="..\html\index.html">Home</a></li>
+                    <li><a href="..\html\speisekarte.html">Speisekarte</a></li>      
                     <li><a href="#">Bestellen</a></li>
                     <li><a href="#">Impressum</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="active"><a href="admin_login.html">Login</a></li>
+                    <li class="active"><a href="..\html\admin_login.html">Login</a></li>
                 </ul>
             </div>
         </div>
@@ -64,7 +64,8 @@ $aktionspreis = null;
 # ist eine Bezeichnung eingegeben worden?
 if (!empty($_POST['bezeichnung']))
 {
-    $bezeichnung = $_POST['bezeichnung'];
+    $bezeichnungAnzeige = $_POST['bezeichnung'];
+    $bezeichnung = utf8_decode($_POST['bezeichnung']);
     
 } else {
     $bezeichnung = $_POST['bezeichnung'];
@@ -74,10 +75,11 @@ if (!empty($_POST['bezeichnung']))
 # ist eine Beschreibung eingegeben worden?
 if (!empty($_POST['beschreibung']))
 {
-    $beschreibung = $_POST['beschreibung'];
+    $beschreibungAnzeige = $_POST['beschreibung'];
+    $beschreibung = utf8_decode($_POST['beschreibung']);
 
 } else {
-    $beschreibung = $_POST['beschreibung'];
+    $beschreibung = utf8_decode($_POST['beschreibung']);
     $db_valid_input = false;
 }
 
@@ -107,7 +109,9 @@ if (!empty($_POST['preis']))
 if (!empty($_POST['kategorie']))
 {
     $kategorie = $_POST['kategorie'];
-    $kategorieanzeige = $kategorie;
+    $kategorieAnzeige = $kategorie;
+    $kategorie = utf8_decode($kategorie);
+    
 
 } else {
     $preis = $_POST['preis'];
@@ -171,11 +175,114 @@ $db_benutzername  = 'loremipsum-pizza';
 
                     if ($sqlAnzahl > 0)
                     {
-                        echo "Schon vorhanden";
+                        # gefülltes Formular nochmals ausgeben
+                        # -- Meldung: bereits vorhanden
+                                ?>
+                                    <!-- Hauptinhalt -->
+                        <div class="container">
+                            <div class="alert alert-info">
+                                <strong>Information:   </strong>Der Datensatz wurde bereits in der Datenbank erfasst
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-7">
+                                    <form method="POST" action="mutation_php.php">
+                                        <div class="form-group">
+                                            <label for="text">Produkt-Bezeichnung</label>
+                                            <input type="text" class="form-control" name="bezeichnung" id="bezeichnung" <?php echo "value=\"$bezeichnungAnzeige\"" ?>>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="text">Produkt-Beschreibung</label>
+                                            <input type="text" class="form-control" name="beschreibung" id="beschreibung" <?php echo "value=\"$beschreibungAnzeige\"" ?>>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="text">Grösse</label>
+                                            <input type="text" class="form-control" name="groesse" id="groesse" <?php echo "value=\"$groesse\"" ?>>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="text">Preis</label>
+                                            <input type="number" min="1" step="0.05" class="form-control" name="preis" id="preis" <?php echo "value=\"$preis\"" ?>>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="kategorie">Produkt-Kategorie</label>
+                                            <select class="form-control" id="kategorie" name="kategorie">
+                                            <?php
+
+
+                                            $link = mysqli_connect($db_position , $db_benutzername , 'pi$$a', $db_datenbank  );
+                                            if ($link)
+                                            {
+                                                $sqlResultat = mysqli_query($link,"SELECT bezeichnung
+                                                               FROM tbl_kategorie
+                                                               WHERE aktiv_flag = '1'");
+
+                                                $sqlAnzahl = mysqli_num_rows($sqlResultat);
+                                                while ($row = mysqli_fetch_row($sqlResultat))
+                                                {
+                                                    echo "<option"; 
+                                                    if ($row[0] == $kategorie)
+                                                    {
+                                                        $kategorieAnzeige = utf8_encode($row[0]);
+                                                        echo " selected";
+                                                    }
+                                                    $kategorieAnzeige = utf8_encode($row[0]);
+                                                    echo ">$kategorieAnzeige";
+
+                                                    echo "</option>";
+                                                }
+                                            }
+                                            ?>    
+
+                                            </select>    
+                                        </div>
+                                        <label for="text">Ist das Produkt eine Aktion?</label>
+                                        <div class="radio">
+                                            <label><input type="radio" name="radio-wert" value="Ja" 
+                                                          <?php if ($aktionsflag == 1)
+                                                                { 
+                                                                    echo " checked";
+                                                                }
+                                                          ?>  
+
+                                                >Ja</label>
+                                        </div>
+                                        <div class="radio">
+                                            <label><input type="radio" name="radio-wert" value="Nein"
+                                                          <?php if ($aktionsflag == 0)
+                                                                { 
+                                                                    echo " checked";
+                                                                }
+                                                          ?>  
+                                                >Nein</label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="text">Aktions-Preis</label>
+                                            <input type="number" min="1" step="0.05" class="form-control" name="aktionspreis" id="aktionspreis" <?php echo "value=\"$aktionspreis\"" ?>>
+                                        </div>
+
+
+                                <button type="submit" class="btn btn-primary" name="einfuegen">Einfügen</button>
+                                <a href="mutation_site.php" class="btn btn-primary" role="button" name="leeren">Formular leeren</a>
+
+                                </form>
+                                </div>
+                                <!-- Bestell-Button, um Bestellvorgang aufzurufen -->
+                                <div class="col-sm-5">
+
+                                </div>
+                            </div>
+                            <!-- Platzhalter, damit Button in mobile nicht verschwindet -->
+                            <div class="row">
+                                <div class="col-sm-12" id="platzHalter">
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                                                              
                     } else {
 
                         #Fremdschlüsselwert holen
-
+   
                          $sqlFK = mysqli_query($link,"SELECT ID 
                                                       FROM tbl_kategorie
                                                        WHERE bezeichnung = '$kategorie'
@@ -213,20 +320,21 @@ $db_benutzername  = 'loremipsum-pizza';
                                                         ) ");
                         
                         ?>
-    
+                    
                         <div class="container">
-                      <h2>Folgender Datensatz wurde in die Speisekarte aufgenommen:</h2>
-                      <br>
+                            <div class="alert alert-success">
+                                <strong>Hinzufügen erfolgreich</strong> 
+                            </div>
           
                       <table class="table table-striped">
                         <tbody>
                           <tr>
                             <td><strong>Bezeichnung</strong></td>
-                            <td><?php echo "$bezeichnung" ?></td>
+                            <td><?php echo "$bezeichnungAnzeige" ?></td>
                           </tr>
                           <tr>
                             <td><strong>Beschreibung</strong></td>
-                            <td><?php echo "$beschreibung" ?></td>
+                            <td><?php echo "$beschreibungAnzeige" ?></td>
                           </tr>
                           <tr>
                             <td><strong>Grösse</strong></td>
@@ -242,7 +350,7 @@ $db_benutzername  = 'loremipsum-pizza';
                           </tr>    
                           <tr>
                             <td><strong>Kategorie</strong></td>
-                            <td><?php echo "$kategorieanzeige" ?></td>
+                            <td><?php echo "$kategorieAnzeige" ?></td>
                           </tr>    
                           <tr>
                             <td><strong>Aktion</strong></td>
@@ -271,23 +379,26 @@ $db_benutzername  = 'loremipsum-pizza';
 
             }
         } else {
+            
         
         ?>
                 <!-- Hauptinhalt -->
     <div class="container">
         <h2>Produkt in die Speisekarte aufnehmen</h2>
-        <br>
-        <h4>Bitte geben Sie gültige Werte ein</h4>
+            <div class="container">
+                <div class="alert alert-warning">
+                    <strong>Warnung:   </strong>Bitte geben Sie gültige Werte ein
+                            </div>
         <div class="row">
             <div class="col-sm-7">
                 <form method="POST" action="mutation_php.php">
                     <div class="form-group">
                         <label for="text">Produkt-Bezeichnung</label>
-                        <input type="text" class="form-control" name="bezeichnung" id="bezeichnung" <?php echo "value=\"$bezeichnung\"" ?>>
+                        <input type="text" class="form-control" name="bezeichnung" id="bezeichnung" <?php echo "value=\"$bezeichnungAnzeige\"" ?>>
                     </div>
                     <div class="form-group">
                         <label for="text">Produkt-Beschreibung</label>
-                        <input type="text" class="form-control" name="beschreibung" id="beschreibung" <?php echo "value=\"$beschreibung\"" ?>>
+                        <input type="text" class="form-control" name="beschreibung" id="beschreibung" <?php echo "value=\"$beschreibungAnzeige\"" ?>>
                     </div>
                     <div class="form-group">
                         <label for="text">Grösse</label>
@@ -295,7 +406,7 @@ $db_benutzername  = 'loremipsum-pizza';
                     </div>
                     <div class="form-group">
                         <label for="text">Preis</label>
-                        <input type="number" class="form-control" name="preis" id="preis" <?php echo "value=\"$preis\"" ?>>
+                        <input type="number" min="1" step="0.05" class="form-control" name="preis" id="preis" <?php echo "value=\"$preis\"" ?>>
                     </div>
                     <div class="form-group">
                         <label for="kategorie">Produkt-Kategorie</label>
@@ -317,7 +428,9 @@ $db_benutzername  = 'loremipsum-pizza';
                                 if ($row[0] == $kategorie)
                                 {
                                     echo " selected";
-                                }echo ">$row[0]";
+                                }
+                                $kategorieAnzeige = utf8_encode($row[0]);
+                                echo ">$kategorieAnzeige";
 
                                 echo "</option>";
                             }
@@ -348,11 +461,13 @@ $db_benutzername  = 'loremipsum-pizza';
                     </div>
                     <div class="form-group">
                         <label for="text">Aktions-Preis</label>
-                        <input type="number" class="form-control" name="aktionspreis" id="aktionspreis" <?php echo "value=\"$aktionspreis\"" ?>>
+                        <input type="number" min="1" step="0.05" class="form-control" name="aktionspreis" id="aktionspreis" <?php echo "value=\"$aktionspreis\"" ?>>
                     </div>
                     
 
-                <button type="submit" class="btn btn-default" name="einfuegen">einfügen</button>
+                    <button type="submit" class="btn btn-primary" name="einfuegen">Einfügen</button>
+                    <a href="mutation_site.php" class="btn btn-primary" role="button" name="leeren">Formular leeren</a>
+
             </form>
             </div>
             <!-- Bestell-Button, um Bestellvorgang aufzurufen -->
