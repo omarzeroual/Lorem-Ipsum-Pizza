@@ -98,17 +98,14 @@ ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE `loremipsum-pizza`.`tbl_bestellung` (
-  `ID` INT NOT NULL,
-  `bestellungsNr` VARCHAR(45) NULL,
+  `ID` INT NOT NULL AUTO_INCREMENT,
   `zeitpunkt` TIMESTAMP NULL,
   `fk_informationen` INT NULL,
-  `lieferadresse` VARCHAR(128) NULL,
   `gesamtpreis` DOUBLE NULL,
   `abgeschlossen_flag` TINYINT(1) NULL,
   `zahlungsart` VARCHAR(45) NULL,
   PRIMARY KEY (`ID`),
   UNIQUE INDEX `ID_UNIQUE` (`ID` ASC),
-  UNIQUE INDEX `bestellungsNr_UNIQUE` (`bestellungsNr` ASC),
   INDEX `fk_tbl_bestellung_tbl_informationen1_idx` (`fk_informationen` ASC),
     FOREIGN KEY (`fk_informationen`)
     REFERENCES `mydb`.`tbl_kontaktinformationen` (`ID`)
