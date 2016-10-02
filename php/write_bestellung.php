@@ -176,11 +176,27 @@ foreach($array_produkte as $produktID => $produktMenge){
     $gesamtpreis = $gesamtpreis + $preisUebersicht;
     
 }
+               
 
 echo    "</tbody>";
 echo "</table>";
+        
+?>
+<br>
+<br>
+<table class="table table-striped">
+        <tbody>
+        <tr>
+            <td><strong>Gesamtpreis</strong></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><strong><?php echo "$gesamtpreis" . " CHF" ?></strong></td>
+        </tr>
+    </tbody>
+</table>
     
-
+<?php
 
 
 ### Eintrag in die Tabelle tbl_bestellung schreiben
