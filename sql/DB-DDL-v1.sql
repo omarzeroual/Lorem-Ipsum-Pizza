@@ -71,7 +71,7 @@ CREATE TABLE `loremipsum-pizza`.`tbl_produkte` (
     REFERENCES `loremipsum-pizza`.`tbl_kategorie` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB DEFAULT CHARSET=utf8;;
+ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 -- Zwischentabelle zum erfassen der 
 -- Produkte innerhalb einer Bestellung
@@ -97,7 +97,21 @@ CREATE TABLE `loremipsum-pizza`.`tbl_bestellung_produkt` (
 ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 
-
+CREATE TABLE `loremipsum-pizza`.`tbl_bestellung` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `zeitpunkt` TIMESTAMP NULL,
+  `fk_informationen` INT NULL,
+  `gesamtpreis` DOUBLE NULL,
+  `abgeschlossen_flag` TINYINT(1) NULL,
+  `zahlungsart` VARCHAR(45) NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC),
+  INDEX `fk_tbl_bestellung_tbl_informationen1_idx` (`fk_informationen` ASC),
+    FOREIGN KEY (`fk_informationen`)
+    REFERENCES `mydb`.`tbl_kontaktinformationen` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

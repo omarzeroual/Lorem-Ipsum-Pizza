@@ -385,10 +385,16 @@ $db_benutzername  = 'loremipsum-pizza';
                 <!-- Hauptinhalt -->
     <div class="container">
         <h2>Produkt in die Speisekarte aufnehmen</h2>
-            <div class="container">
-                <div class="alert alert-warning">
-                    <strong>Warnung:   </strong>Bitte geben Sie gültige Werte ein
-                            </div>
+        <div class="container">    
+        <?php
+            if (empty($_POST['leeren']))
+            {
+                echo "<div class=\"alert alert-warning\">";
+                echo    "<strong>Warnung:   </strong>Bitte geben Sie gültige Werte ein";
+                echo "</div>";
+            }
+            ?>
+                
         <div class="row">
             <div class="col-sm-7">
                 <form method="POST" action="mutation_php.php">
@@ -466,7 +472,7 @@ $db_benutzername  = 'loremipsum-pizza';
                     
 
                     <button type="submit" class="btn btn-primary" name="einfuegen">Einfügen</button>
-                    <a href="mutation_site.php" class="btn btn-primary" role="button" name="leeren">Formular leeren</a>
+                    <a href="mutation_php.php" class="btn btn-primary" role="button" name="leeren">Formular leeren</a>
 
             </form>
             </div>
