@@ -69,26 +69,29 @@
                         
                     } else {
                         
-                        print_r($_POST);
-                        
                         # Fehler zurücksetzen
                         $keineAuswahlFehler = false;
                         $formatFehler = false;
                         
-                        # Zähler, um Anzahl Nullwerte festzuhalten
-                        $counterNullwert = 0;
                         # Zahlenformat für Validierung
                         $format = '/\d/';
-                        echo count($_POST);
                         
                         foreach ($_POST as $pID => $menge) {
+                            
+                            # Input Menge reinigen und updaten
+                            $menge = sanitizeData($menge);
+                            $_POST[$pID] = $menge;
+                            
                             if ($menge == '0') {
+                                # Menge mit '0', also keine Auswahl vom Array entfernen
                                 unset($_POST[$pID]);
-                                $counterNullwert += 1;
                             } else {
+                                # Prüfen, ob Menge in einem ungültigen Format ist
                                 if (!preg_match($format, $menge)) {
                                     $formatFehler = true;
-                                    echo '!preg_match';
+                                } else {
+                                    # Bei gültiger Menge führende Nullen entfernen
+                                    $_POST[$pID] = ltrim($menge, "0");
                                 }
                             }
                         }
@@ -105,9 +108,18 @@
                         include "generateAuswahl.php";
                         
                         echo '<p>Forumlar geschickt!</p>';
-                        echo '<p>Nullwerte gelöscht: ' .$counterNullwert. '</p>';
                         echo '<p>Array Grösse: ' .count($_POST). '</p>';
                         print_r($_POST);
+                    }
+                    
+                    /**
+                     *  Funktion um Daten zu reinigen
+                     */
+                    function sanitizeData($data) {
+                        $data = trim($data);
+                        $data = stripslashes($data);
+                        $data = htmlspecialchars($data);
+                        return $data;
                     }
                     ?>
                 
