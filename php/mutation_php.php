@@ -39,8 +39,8 @@
                 <ul class="nav navbar-nav">
                     <li><a href="..\html\index.html">Home</a></li>
                     <li><a href="..\html\speisekarte.html">Speisekarte</a></li>      
-                    <li><a href="#">Bestellen</a></li>
-                    <li><a href="#">Impressum</a></li>
+                    <li><a href="bestellung_wahl.php">Bestellen</a></li>
+                    <li><a href="../html/impressum.html">Impressum</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="active"><a href="..\html\admin_login.html">Login</a></li>
