@@ -39,7 +39,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="../index.html">Home</a></li>
                     <li class="active"><a href="#">Speisekarte</a></li>      
-                    <li><a href="#">Bestellen</a></li>
+                    <li><a href="../php/bestellung_wahl.php">Bestellen</a></li>
                     <li><a href="#">Impressum</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -56,7 +56,15 @@
             <div class="col-sm-8">
                 
                 <?php
-                    
+                
+                # Parameter setzen für generateAuswahl.php
+                $vonSpeisekarte = true;
+                $vonBestellung = false;
+                # Ansicht generieren
+                include "generateAuswahl.php";                
+                
+                
+                /*
                     #### Variablen ####
                     # Rechner, auf dem sich die DB befindet
                     $db_position = 'localhost';
@@ -169,7 +177,8 @@
                         }
                     } else {
                         echo '<p>Verbindung zu DB fehlgeschlagen</p>';
-                    }
+                    } 
+                */
                     ?>
                 
             </div>

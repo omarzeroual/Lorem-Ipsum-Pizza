@@ -103,6 +103,8 @@ if ($link) {
             if ($vonBestellung) {            
                 # Initialisieren der dynamischen "$value{pID}" Variablen
                 ${'value' .$row['pID']} = 0;
+                # $auswahlWarnung initialisieren
+                $auswahlWarnung = '';
                 
                 # Im ersten Durchlauf wurden gültige Auswahl getroffen, diese in Values setzen
                 if (!$keineAuswahlFehler) {
@@ -118,11 +120,8 @@ if ($link) {
                                     # Warnung generieren
                                     $auswahlWarnung =   '<div class="alert alert-warning alert-dismissable" role="alert">'
                                                             .'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">' .html_entity_decode('&#215;'). '</span></button>'
-                                                            .'<strong>Warnung! </strong>Es wurde eine ungültige Eingabe gemacht. Bitte korrigieren.'
+                                                            .'<strong>Warnung! </strong>Die Eingabe "' .$menge. '" ist ungültig. Bitte korrigieren.'
                                                         .'</div>';
-                                } else {
-                                    # keine Warnung ausgeben
-                                    $auswahlWarnung = '';
                             }
                         }
                     }
@@ -191,7 +190,7 @@ if ($link) {
             if ($keineAuswahlFehler) {
                 echo '<div class="alert alert-warning alert-dismissable" role="alert">';
                     echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">' .html_entity_decode('&#215;'). '</span></button>';
-                    echo '<strong>Warnung! </strong>Es wurden keine Auswahl getroffen. Bitte nochmals auswählen.';
+                    echo '<strong>Warnung! </strong>Es wurde keine Auswahl getroffen. Bitte nochmals auswählen.';
                 echo '</div>';            
             # Warnung falls bei der Bestellung eine ungültige Eingabe getätigt wurde.
             } else if ($formatFehler) {
@@ -199,8 +198,9 @@ if ($link) {
                     echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">' .html_entity_decode('&#215;'). '</span></button>';
                     echo '<strong>Warnung! </strong>Es wurden ungültige Eingaben gemacht. Bitte korrigieren.';
                 echo '</div>';
-            }            
-            echo '<button type="submit" class="btn btn-default" id="submitForm">Weiter</button>';
+            } 
+            echo '<button type="reset" class="btn btn-default">Zurücksetzen</button>';
+            echo '<button type="submit" class="btn btn-default">Weiter</button>';
             echo '</form>';
         }
     }
