@@ -87,10 +87,13 @@ if (!empty($_POST['beschreibung']))
 # ist eine groesse eingegeben worden?
 if (!empty($_POST['groesse']))
 {
-    $groesse = $_POST['groesse'];
+    
+    $groesse = utf8_decode($_POST['groesse']);
+    $groesseAnzeige = utf8_encode($groesse);
 
 } else {
-    $groesse = $_POST['groesse'];
+    $groesse = utf8_decode($_POST['groesse']);
+    $groesseAnzeige = utf8_encode($groesse);
     $db_valid_input = false;
 }
 
@@ -197,7 +200,7 @@ $db_benutzername  = 'loremipsum-pizza';
                                         </div>
                                         <div class="form-group">
                                             <label for="text">Grösse</label>
-                                            <input type="text" class="form-control" name="groesse" id="groesse" <?php echo "value=\"$groesse\"" ?>>
+                                            <input type="text" class="form-control" name="groesse" id="groesse" <?php echo "value=\"$groesseAnzeige\"" ?>>
                                         </div>
                                         <div class="form-group">
                                             <label for="text">Preis</label>
@@ -338,7 +341,7 @@ $db_benutzername  = 'loremipsum-pizza';
                           </tr>
                           <tr>
                             <td><strong>Grösse</strong></td>
-                            <td><?php echo "$groesse" ?></td>
+                            <td><?php echo "$groesseAnzeige" ?></td>
                           </tr>
                           <tr>
                             <td><strong>Preis</strong></td>
@@ -408,7 +411,7 @@ $db_benutzername  = 'loremipsum-pizza';
                     </div>
                     <div class="form-group">
                         <label for="text">Grösse</label>
-                        <input type="text" class="form-control" name="groesse" id="groesse" <?php echo "value=\"$groesse\"" ?>>
+                        <input type="text" class="form-control" name="groesse" id="groesse" <?php echo "value=\"$groesseAnzeige\"" ?>>
                     </div>
                     <div class="form-group">
                         <label for="text">Preis</label>
