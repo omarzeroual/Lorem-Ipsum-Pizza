@@ -84,7 +84,7 @@ $zahlungsart = null;
 # Variable für Email-senden
 $emailAbsender ="??????????????";
 $emailBetreff = "Ihre Bestellung bei Loremipsum-Pizza";
-$emailEmpfaenger = null;
+$emailEmpfaenger = "loremipsum-pizza@mailinator.com";
 $emailAntwortAn = $emailAbsender;
 $emailInhalt = null;
     
