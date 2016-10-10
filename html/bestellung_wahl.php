@@ -18,7 +18,7 @@
     
     <link rel="stylesheet" type="text/css" href="../css/style.css">
     
-	<title>Lorem Ipsum Pizzakurier: Speisekarte</title>
+	<title>Lorem Ipsum Pizzakurier: Bestellung - Auswahl</title>
 </head>
 <body>
     
@@ -38,8 +38,8 @@
             <div class="collapse navbar-collapse" id="mainNav">
                 <ul class="nav navbar-nav">
                     <li><a href="../index.html">Home</a></li>
-                    <li class="active"><a href="#">Speisekarte</a></li>      
-                    <li><a href="../php/bestellung_wahl.php">Bestellen</a></li>
+                    <li><a href="../php/speisekarte.php">Speisekarte</a></li>      
+                    <li class="active"><a href="#">Bestellen</a></li>
                     <li><a href="../html/impressum.html">Impressum</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -51,20 +51,12 @@
     
     <!-- Hauptinhalt -->
     <div class="container">
-        <h2>Speisekarte</h2>
+        <h2>Auswahl</h2>
         <div class="row">
             <div class="col-sm-8">
                 
                 <?php
-                
-                # Parameter setzen für generateAuswahl.php
-                $vonSpeisekarte = true;
-                $vonBestellung = false;
-                # Ansicht generieren
-                include "generateAuswahl.php";                
-                
-                
-                /*
+                    
                     #### Variablen ####
                     # Rechner, auf dem sich die DB befindet
                     $db_position = 'localhost';
@@ -85,7 +77,7 @@
                     }
                     
                     # SQL Abfrage, um die verfügbaren Produkte, nach Kategorie-ID und Produktpreis sortiert, zu erhalten.
-                    $sqlProduce = "SELECT k.bezeichnung AS kBez, k.beschreibung AS kBes, p.bezeichnung AS pBez, p.beschreibung pBes, p.preis, p.groesse
+                    $sqlProduce = "SELECT k.bezeichnung AS kBez, k.beschreibung AS kBes, p.ID AS pID, p.bezeichnung AS pBez, p.beschreibung AS pBes, p.preis, p.groesse
                             FROM tbl_produkte AS p LEFT JOIN tbl_kategorie AS k
                             ON p.fk_kategorie = k.ID
                             WHERE p.aktiv_flag = 1
@@ -108,7 +100,10 @@
                             # Gruppenwechsel initialisieren
                             $kategorie = '';
                             
-                            echo '<p>Kategorien:</p>';
+                            $textBestellung = 'Wählen Sie von unserem reichhaltigem & feinem Sortiment aus. Im Eingabefeld können Sie die gewünschte Menge angeben. Mit "weiter" können Sie zur Angabe Ihrer persönlichen Daten fortfahren.';
+                            
+                            echo '<p>' .$textBestellung. '</p>';
+                            echo '<br><p>Kategorien:</p>';
                             echo '<div class="btn-group" role="group">';     
                             
                             # Cursor iterieren
@@ -135,8 +130,13 @@
                             # Gruppenwechsel initialisieren
                             $kategorie = '';
                             
+                            echo '<form action="' .htmlspecialchars($_SERVER['PHP_SELF']). '" method="post">';
+                            
                             # Cursor iterieren
                             while($row = mysqli_fetch_assoc($cursorProduce)) {              
+                                
+                                # Initialisieren der dynamischen "$value{pID}" Variablen
+                                ${'value' .$row['pID']} = 0;
                                 
                                 # Nicht erste Gruppe und Gruppenwechsel
                                 if ($kategorie !== $row['kBez'] and $kategorie !== '') {
@@ -163,8 +163,12 @@
                                 
                                 # Produkte ausgeben
                                 echo '<li class="list-group-item">';
-                                echo '<p>' .utf8_encode($row["pBez"]). ' ' .utf8_encode($row["groesse"]). '&emsp;' .$row["preis"]. '.-</p>';
+                                echo '<div class="form-group">';
+                                echo '<input type="number" min="0" class="form-control" id="inputAuswahl" ';
+                                echo 'name="' .$row["pID"]. '" value="' .${'value' .$row["pID"]}. '">';
+                                echo '<p>' .utf8_encode($row["pBez"]). ' ' .utf8_encode($row["groesse"]). '&emsp;' .$row["preis"]. ' Fr.</p>';
                                 echo '<p class="small">' .utf8_encode($row["pBes"]). '</p>';
+                                echo '</div>';                                
                                 echo '</li>';                                    
                                 
                                 # Gruppenwechselvariable aktualisieren
@@ -173,16 +177,19 @@
                             
                             echo '</ul>';
                             echo '</div>';
+                            echo '<button type="submit" class="btn btn-default" id="submitForm">Weiter</button>';
+                            echo '</form>';
                             
                         }
                     } else {
                         echo '<p>Verbindung zu DB fehlgeschlagen</p>';
-                    } 
-                */
+                    }
                     ?>
                 
             </div>
-            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <button for="submitForm">Weiter</button>
+            </div>
         </div>
         <!-- Platzhalter, damit Button in mobile nicht verschwindet -->
         <div class="row">
