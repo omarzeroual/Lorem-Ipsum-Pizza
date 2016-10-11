@@ -82,11 +82,25 @@ $abgeschlossen_flag =  1;
 $zahlungsart = null;
     
 # Variable für Email-senden
-$emailAbsender ="??????????????";
+$emailAbsender ="loremipsum-pizza@mailinator.com";
 $emailBetreff = "Ihre Bestellung bei Loremipsum-Pizza";
-$emailEmpfaenger = "loremipsum-pizza@mailinator.com";
+$emailEmpfaenger = null;
 $emailAntwortAn = $emailAbsender;
 $emailInhalt = null;
+    
+                
+### Variablen für die .txt-Datei
+$txtOrdnerPfad = "../txt/";
+$txtName= "bestellung_";
+$txtOrdnerName = null;
+# Variable für  Inhalt von .txt-file 
+$txtInhalt = null;
+   
+# Email-Kopf vorbereiten 
+$txtInhalt = $txtInhalt + "\r\nAbsender:" . "  $emailAbsender \r\n";
+$txtInhalt = $txtInhalt + "\r\nEmpfänger:" . " $emailEmpfaenger \r\n";
+$txtInhalt = $txtInhalt + "\r\nBetreff:" . " $emailBetreff \r\n\r\n";
+    
     
 
 
@@ -201,6 +215,9 @@ if (mysqli_num_rows($kontaktDaten) > 0)
 
 $zeitpunkt = date('Y-m-d G:i:s');
 
+# txt Name bestimmen
+$txtName = $txtName + "$zeitpunkt";
+$txtOrdnerName = $txtOrdner + txtName + ".txt";
 
 $array_produkte = array($_POST['produkte']);
 
@@ -357,6 +374,13 @@ mail($emailEmpfaenger,
      "From:$emailAbsender\r\nContent-Type: text/html; charset=UTF-8\r\nReply-To:$emailAbsender",
      '-f' . $emailAbsender);
     
+# emailInhalt in txt-Inhalt kopieren
+$txtInhalt = $txtInhalt +$emailInhalt;
+    
+#Email als txt auf dem Server ablegen
+$txtFile = fopen($txtOrdnerName, "w");
+fwrite($txtFile, $txtInhalt);
+fclose($txtFile);
     
     if (mysqli_num_rows($produktDaten) > 0)
     {
