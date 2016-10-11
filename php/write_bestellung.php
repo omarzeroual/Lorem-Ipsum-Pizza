@@ -225,7 +225,30 @@ $array_produkte = array($_POST['produkte']);
 
     
 ?>
-                
+  
+<div class="container">
+<h4><strong>Kontakdaten</strong></h4>           
+<table class="table">
+    <tbody>
+        <tr>
+            <td>Name: </td>
+            <td><?php echo "$vorname". " $nachname"?></td>
+        </tr>
+        <tr>
+            <td>Email:</td>
+            <td><?php echo "$email"?></td>
+        </tr>
+        <tr>
+            <td>Telefonnummer:</td>
+            <td><?php echo "$telefonnummer"?></td>
+        </tr>
+        <tr>
+            <td>Lieferadresse:</td>
+            <td><?php echo "$lieferadresse"?></td>
+        <tr>
+    </tbody>
+</table>
+</div>
 <div class="container">
 
 <h4><strong>Bestellungsübersicht</strong></h4>
