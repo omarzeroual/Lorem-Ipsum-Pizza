@@ -170,7 +170,7 @@ if ($link) {
             # Bei Aktion, den alten Preis durchkreuzen und Aktionspreis anzeigen.
             } else {
                 echo '<p><span>' .utf8_encode($row["pBez"]). ' ' .utf8_encode($row["groesse"]). '&emsp;|&emsp;</span>';
-                echo '<span id="preisAlt"><del>' .$row["preis"]. '</del></span><span id="preisNeu">&emsp;' .$row["pAktPreis"]. '</span> Fr.</p>';
+                echo '<span class="text-danger"><del>' .$row["preis"]. '</del></span><span class="text-success">&emsp;<abbr title="Aktionspreis">' .$row["pAktPreis"]. '</abbr></span> Fr.</p>';
             }
                 
             # Wenn die Beschreibung nicht leer ist, dann Ausgeben
