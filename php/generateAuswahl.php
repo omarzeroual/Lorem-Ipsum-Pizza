@@ -205,8 +205,12 @@ if ($link) {
                     echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">' .html_entity_decode('&#215;'). '</span></button>';
                     echo '<strong>Warnung! </strong>Es wurden ungültige Eingaben gemacht. Bitte korrigieren.';
                 echo '</div>';
-            } 
-            echo '<button type="reset" class="btn btn-default">Zurücksetzen</button>';
+            }
+            if (empty($_POST)) {
+                echo '<button type="reset" class="btn btn-default">Zurücksetzen</button>';
+            } else {
+                echo '<a href="http://loremipsum-pizza.square7.ch/php/bestellung_wahl.php" class="btn btn-default" role="button">Zurücksetzen</a>';
+            }
             echo '<button type="submit" class="btn btn-default">Weiter</button>';
             echo '</form>';
         }
