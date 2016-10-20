@@ -21,3 +21,11 @@
 .form-group p {
     padding-top: 7px;
 }
+
+#preisAlt {
+    color: firebrick;
+}
+
+#preisNeu {
+    color:  green;
+}
