@@ -8,6 +8,7 @@
     $email = '';
     $telefonnummer = '';
     $lieferadresse = '';
+    $kommtVomFormular = 0;
 
     #Fehlervariablen initialisieren, 0 = kein Fehler
 
@@ -17,37 +18,41 @@
     $fehlerTelefonnummer = 0;
     $fehlerLieferadresse =0;
 
+    if(isset($_POST['weiter'])){
+        $kommtVomFormular = 1;
+        
+        $vorname = htmlspecialchars($_POST['name']);
+        $nachname = htmlspecialchars($_POST['vorname']);
+        $email = htmlspecialchars($_POST['email']);
+        $telefon = htmlspecialchars($_POST['telefon']);
+        $lieferadresse = htmlspecialchars($_POST['lieferadresse']);
 
-    $vorname = htmlspecialchars($_POST['name']);
-    $nachname = htmlspecialchars($_POST['vorname']);
-    $email = htmlspecialchars($_POST['email']);
-    $telefon = htmlspecialchars($_POST['telefon']);
-    $lieferadresse = htmlspecialchars($_POST['lieferadresse']);
 
+        if($vorname == ''){
+            $fehlerVorname = 1;
+        }
 
-    if($vorname == ''){
-        $fehlerVorname = 1;
+        if($nachname == ''){
+            $fehlerNachname = 1;
+        }
+
+        if($email == ''){
+            $fehlerEmail = 1;
+        }
+
+        if($telefonnummer == ''){
+            $fehlerTelefonnummer = 1;
+        }
+
+        if($lieferadresse == ''){
+            $fehlerLieferadresse = 1;
+        }
     }
-
-    if($nachname == ''){
-        $fehlerNachname = 1;
-    }
-
-    if($email == ''){
-        $fehlerEmail = 1;
-    }
-
-    if($telefonnummer == ''){
-        $fehlerTelefonnummer = 1;
-    }
-
-    if($lieferadresse == ''){
-        $fehlerLieferadresse = 1;
-    }
+    
 
     #Auswertung und Ausgabe
 
-    if($fehlerVorname OR $fehlerName OR $fehlerEmail OR $fehlerTelfonnummer OR $fehlerLieferadresse){
+    if($fehlerVorname OR $fehlerName OR $fehlerEmail OR $fehlerTelfonnummer OR $fehlerLieferadresse OR ! $kommtVomFormular){
         ausgebenHead();
         ausgebenFormular();
     }
@@ -80,7 +85,7 @@
         echo '<p>Füllen Sie auch die folgenden Felder aus:<br>';
         
         if($fehlerVorname){
-            echo 'Vorname<br>':
+            echo 'Vorname<br>';
         }
         
         if($fehlerNachname){
@@ -142,7 +147,7 @@
         <h2>Kontaktdaten</h2>
         <div class="row">
             <div class="col-sm-9">
-                <form action="" name="testform" method="post">
+                <form action="$_SERVER[PHP_SELF]" name="testform" method="post">
                     <p>Vorname</p>
                     <input type="text" name="vorname" id="vorname" value="$vorname" $focusVorname><br>
                     <p>Nachname</p>
@@ -157,7 +162,7 @@
             </div>
             <!-- Bestell-Button, um Bestellvorgang aufzurufen -->
             <div class="col-sm-3">
-                <a href="#"><button type="button" class="btn btn-primary btn-block btn-lg" role="button"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Weiter</button></a>
+                <button type="submit" class="btn btn-default" name="weiter">weiter</button>
             </div>
         </div>
         <!-- Platzhalter, damit Button in mobile nicht verschwindet -->
@@ -201,7 +206,7 @@ function ausgebenHead(){
     <!-- Latest compiled JavaScript -->
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
     
 	<title>Lorem Ipsum Pizzakurier</title>
 </head>
@@ -211,12 +216,12 @@ function ausgebenHead(){
     <div class="page-header">
         <h1>Lorem Ipsum <small>Pizzakurier</small></h1>
     </div>
-ENDE_HEAD
+ENDE_HEAD;
 }
 
 //Funktion ausgebenBestätigung + Insert in DB
 
-function writeDEB(){
+function writeDB(){
     #### Variablen ####
     # Rechner, auf dem sich die DB befindet
     $db_position = 'localhost';
