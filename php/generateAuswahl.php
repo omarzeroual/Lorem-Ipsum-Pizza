@@ -20,7 +20,7 @@ if (!$link)
 }
 
 # SQL Abfrage, um die verfügbaren Produkte, nach Kategorie-ID und Produktpreis sortiert, zu erhalten.
-$sqlProdukt = "SELECT k.bezeichnung AS kBez, k.beschreibung AS kBes, p.ID AS pID, p.bezeichnung AS pBez, p.beschreibung AS pBes, p.preis, p.groesse
+$sqlProdukt = "SELECT k.bezeichnung AS kBez, k.beschreibung AS kBes, p.ID AS pID, p.bezeichnung AS pBez, p.beschreibung AS pBes, p.preis, p.groesse, p.aktions_preis AS pAktPreis, p.aktions_flag AS pAktFlag
         FROM tbl_produkte AS p LEFT JOIN tbl_kategorie AS k
         ON p.fk_kategorie = k.ID
         WHERE p.aktiv_flag = 1
@@ -164,8 +164,15 @@ if ($link) {
                 echo 'name="' .$row["pID"]. '" value="' .${'value' .$row["pID"]}. '">';
             }
             
-            echo '<p>' .utf8_encode($row["pBez"]). ' ' .utf8_encode($row["groesse"]). '&emsp;|&emsp;' .$row["preis"]. ' Fr.</p>';
-            
+            # Überprüfen, ob Produkt keine Aktion ist. Dann regulärer Preis normal Anzeigen.
+            if ($row["pAktFlag"] == 0) {
+                echo '<p>' .utf8_encode($row["pBez"]). ' ' .utf8_encode($row["groesse"]). '&emsp;|&emsp;' .$row["preis"]. ' Fr.</p>';
+            # Bei Aktion, den alten Preis durchkreuzen und Aktionspreis anzeigen.
+            } else {
+                echo '<p><span>' .utf8_encode($row["pBez"]). ' ' .utf8_encode($row["groesse"]). '&emsp;|&emsp;</span>';
+                echo '<span class="text-danger"><del>' .$row["preis"]. '</del></span><span class="text-success">&emsp;<abbr title="Aktionspreis">' .$row["pAktPreis"]. '</abbr></span> Fr.</p>';
+            }
+                
             # Wenn die Beschreibung nicht leer ist, dann Ausgeben
             if (strlen($row["pBes"]) > 0) {
                 echo '<p class="small">' .utf8_encode($row["pBes"]). '</p>';
@@ -198,8 +205,12 @@ if ($link) {
                     echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">' .html_entity_decode('&#215;'). '</span></button>';
                     echo '<strong>Warnung! </strong>Es wurden ungültige Eingaben gemacht. Bitte korrigieren.';
                 echo '</div>';
-            } 
-            echo '<button type="reset" class="btn btn-default">Zurücksetzen</button>';
+            }
+            if (empty($_POST)) {
+                echo '<button type="reset" class="btn btn-default">Zurücksetzen</button>';
+            } else {
+                echo '<a href="http://loremipsum-pizza.square7.ch/php/bestellung_wahl.php" class="btn btn-default" role="button">Zurücksetzen</a>';
+            }
             echo '<button type="submit" class="btn btn-default">Weiter</button>';
             echo '</form>';
         }
