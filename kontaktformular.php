@@ -21,18 +21,12 @@
     //if(isset($_POST['weiter'])){
         $kommtVomFormular = 1;
         
-        $vorname = htmlspecialchars($_GET['vorname']);
-        $nachname = htmlspecialchars($_GET['nachname']);
+        $vorname = htmlspecialchars($_POST['vorname']);
+        $nachname = htmlspecialchars($_POST['nachname']);
         $email = htmlspecialchars($_GET['email']);
-        $telefonnummer = htmlspecialchars($_GET['telefonnummer']);
-        $lieferadresse = htmlspecialchars($_GET['lieferadresse']);
-
-        echo"$vorname";
-        echo"$nachname";
-        echo"$telefonnummer";
-        echo"$email";
-        echo"$lieferadresse";
-
+        $telefonnummer = htmlspecialchars($_POST['telefonnummer']);
+        $lieferadresse = htmlspecialchars($_POST['lieferadresse']);
+        $form = htmlspecialchars($_SERVER[PHP_SELF]);
 
         if($vorname == ''){
             $fehlerVorname = 1;
@@ -53,7 +47,7 @@
         if($lieferadresse == ''){
             $fehlerLieferadresse = 1;
         }
-    //}
+  // }
     
 
     #Auswertung und Ausgabe
@@ -130,6 +124,8 @@
             $focusVorname = 'autofocus';
         }
         
+        
+        
         echo <<<ENDE_FORMULAR
     
     <!-- Hauptnavigation -->
@@ -159,7 +155,7 @@
         <h3>Kontaktdaten</h3>
         <div class="row">
             <div class="col-sm-9">
-                <form action="$_SERVER[PHP_SELF]" name="testform" method="get">
+                <form action="$form" name="testform" method="get">
                     <div class="form-group">
                     <p>Vorname</p>
                     <input type="text" class="form-control" name="vorname" id="vorname" value="$vorname" $focusVorname><br>
@@ -182,7 +178,7 @@
                     </div>
                     <!-- Bestell-Button, um Bestellvorgang aufzurufen -->
                     <div class="col-sm-3">
-                         <button type="submit" class="btn btn-default" name="weiter">weiter</button>
+                         <button type="submit" class="btn btn-default" id="weiter" name="weiter">weiter</button>
                      </div>
                     </div>
                 </form>
@@ -244,6 +240,12 @@ ENDE_HEAD;
 //Funktion ausgebenBestätigung + Insert in DB
 
 function writeDB(){
+    
+    global $vorname;
+    global $nachname;
+    global $email;
+    global $telefonnummer;
+    global $lieferadresse;
     
     #### Variablen ####
     # Rechner, auf dem sich die DB befindet
