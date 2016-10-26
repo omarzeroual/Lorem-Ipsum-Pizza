@@ -155,16 +155,26 @@
         <div class="row">
             <div class="col-sm-9">
                 <form action="$_SERVER[PHP_SELF]" name="testform" method="post">
+                    <div class="form-group">
                     <p>Vorname</p>
-                    <input type="text" name="vorname" id="vorname" value="$vorname" $focusVorname><br>
+                    <input type="text" class="form-control" name="vorname" id="vorname" value="$vorname" $focusVorname><br>
+                    </div>
+                    <div class="form-group">
                     <p>Nachname</p>
-                    <input type="text" name="nachname" id="nachname" value="$nachname" $focusNachname><br>
+                    <input type="text" class="form-control" name="nachname" id="nachname" value="$nachname" $focusNachname><br>
+                    </div>
+                    <div class="form-group">
                     <p>Email</p>
-                    <input type="email" name="email" id="email" value="$email" $focusEmail><br>
+                    <input type="email" class="form-control" name="email" id="email" value="$email" $focusEmail><br>
+                    </div>
+                    <div class="form-group">
                     <p>Telefonnummer</p>
-                    <input type="tel" name="telefonnummer" id="telefonnummer" value="$telefonnummer" $focusTelefonnummer><br>
+                    <input type="tel" class="form-control" name="telefonnummer" id="telefonnummer" value="$telefonnummer" $focusTelefonnummer><br>
+                    </div>
+                    <div class="form-group">
                     <p>Lieferadresse</p>
-                    <textarea rows="2" cols="20" name="lieferadresse" id="lieferadresse" value="$lieferadresse" $focusLieferadresse></textarea>
+                    <textarea rows="2" cols="20" class="form-control" name="lieferadresse" id="lieferadresse" value="$lieferadresse" $focusLieferadresse></textarea>
+                    </div>
                 </form>
             </div>
             <!-- Bestell-Button, um Bestellvorgang aufzurufen -->
