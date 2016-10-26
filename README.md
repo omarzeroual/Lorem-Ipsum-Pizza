@@ -3,4 +3,9 @@ Building a website offering different functionalities through PHP and/or Javascr
 
 tbd
 
-Copyright 2016 of omarzeroual & friends, or the respective owner of content
+Test 26102016 1424
+Test 26102016 1426
+Test 26102016 1446
+Test 26102016 1447 Local
+Test 26102016 1450 Remote
+
