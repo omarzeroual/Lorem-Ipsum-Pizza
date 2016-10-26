@@ -16,7 +16,7 @@
     <!-- Latest compiled JavaScript -->
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
     
 	<title>Lorem Ipsum Pizzakurier</title>
 </head>
@@ -40,35 +40,51 @@
                     <li><a href="../index.html">Home</a></li>
                     <li><a href="../php/speisekarte.php">Speisekarte</a></li>      
                     <li><a href="../php/bestellung_wahl.php">Bestellen</a></li>
-                    <li><a href="impressum.html">Impressum</a></li>
+                    <li class="active"><a href="impressum.html">Impressum</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="active"><a href="../html/admin_login.html">Login</a></li>
+                    <li><a href="admin_login.html">Login</a></li>
                 </ul>
             </div>
         </div>
     </nav>
     
-    <!-- Hauptinhalt -->
+        <!-- Hauptinhalt -->
     <div class="container">
-        <h2>Admin-Login</h2>
+        <h2>Impressum</h2>
+        <br>
+        <h4> Verantwortlich für www.loremipsum-pizza.square7.ch:</h4>
+        <br>
         <div class="row">
-            <div class="col-sm-4">
-                <form method="POST" action="../php/db.php">
-                    <div class="form-group">
-                        <label for="text">Admin-Benutzername</label>
-                        <input type="text" class="form-control" name="benutzername" id="benutzername">
-                    </div>
-                    <div class="form-group">
-                        <label for="pwd">Passwort</label>
-                        <input type="password" class="form-control" name="passwort" id="passwort">
-                  </div>
+            <div class="col-sm-6">
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td><strong>Kontaktperson:</strong></td>
+                    <td> Pizza Yolo</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Standort:</strong></td>
+                    <td>Pizza Strasse 1</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Ort:</strong></td>
+                    <td>1234 Pizzahausen</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Telefonnummer:</strong></td>
+                    <td> to be announced</td>
+                  </tr>
+                   <tr>
+                    <td><strong>Email:</strong></td>
+                    <td> to be announced</td>
+                  </tr>                   
+                </tbody>
+              </table>
 
-                <button type="submit" class="btn btn-default" name="einloggen">einloggen</button>
-            </form>
             </div>
-            <!-- Bestell-Button, um Bestellvorgang aufzurufen -->
-            <div class="col-sm-8">
+
+            <div class="col-sm-6">
 
             </div>
         </div>
