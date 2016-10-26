@@ -57,7 +57,8 @@
         ausgebenFormular();
     }
     else{
-        augebenHead();
+        ausgebenHead();
+        echo'<p>eintrag erfolgreich';
         writeDB();
     }
 
@@ -81,41 +82,47 @@
         $focusTelefonnummer;
         $focusLieferadresse;
         
-        echo '<h2>Die Daten sind unvollständig ausgefüllt';
-        echo '<p>Füllen Sie auch die folgenden Felder aus:<br>';
+        if($kommtVomFormular){
         
-        if($fehlerVorname){
-            echo 'Vorname<br>';
-        }
-        
-        if($fehlerNachname){
-            echo 'Nachname<br>';
-        }
-        
-        if($fehlerEmail){
-            echo 'Email<br>';
-        }
-        
-        if($fehlerTelefonnummer){
-            echo 'Telefonnummer<br>';
-        }
-        
-        if($fehlerLieferadresse){
-            echo 'Lieferadresse <br>';
-        }
-        
-        if($fehlerVorname OR $fehlerNachname OR $fehlerEmail OR $fehlerTelefonnummer OR $fehlerLieferadresse){
+            echo '<h2>Die Daten sind unvollständig ausgefüllt';
+            echo '<p>Füllen Sie auch die folgenden Felder aus:<br>';
+
             if($fehlerVorname){
-                $focusVorname = 'autofocus';
-            }elseif($fehlerNachname){
-                $focusNachname = 'autofocus';
-            }elseif($fehlerEmail){
-                $focusEmail = 'autofocus';
-            }elseif($fehlerTelefonnummer){
-                $focusTelefonnummer = 'autofocus';
-            }elseif($fehlerLieferadresse){
-                $focusLeiferadresse = 'autofocus';
+                echo 'Vorname<br>';
             }
+
+            if($fehlerNachname){
+                echo 'Nachname<br>';
+            }
+
+            if($fehlerEmail){
+                echo 'Email<br>';
+            }
+
+            if($fehlerTelefonnummer){
+                echo 'Telefonnummer<br>';
+            }
+
+            if($fehlerLieferadresse){
+                echo 'Lieferadresse <br>';
+            }
+
+
+            if($fehlerVorname OR $fehlerNachname OR $fehlerEmail OR $fehlerTelefonnummer OR $fehlerLieferadresse){
+                if($fehlerVorname){
+                    $focusVorname = 'autofocus';
+                }elseif($fehlerNachname){
+                    $focusNachname = 'autofocus';
+                }elseif($fehlerEmail){
+                    $focusEmail = 'autofocus';
+                }elseif($fehlerTelefonnummer){
+                    $focusTelefonnummer = 'autofocus';
+                }elseif($fehlerLieferadresse){
+                    $focusLeiferadresse = 'autofocus';
+                }
+            }
+        }else{
+            $focusVorname = 'autofocus';
         }
         
         echo <<<ENDE_FORMULAR
@@ -144,7 +151,7 @@
     
     <!-- Hauptinhalt -->
     <div class="container">
-        <h2>Kontaktdaten</h2>
+        <h3>Kontaktdaten</h3>
         <div class="row">
             <div class="col-sm-9">
                 <form action="$_SERVER[PHP_SELF]" name="testform" method="post">
@@ -222,6 +229,7 @@ ENDE_HEAD;
 //Funktion ausgebenBestätigung + Insert in DB
 
 function writeDB(){
+    
     #### Variablen ####
     # Rechner, auf dem sich die DB befindet
     $db_position = 'localhost';
@@ -231,8 +239,7 @@ function writeDB(){
     $db_passwort  = 'pi$$a';
 
     # Aufbauen der Datenbank Verbindung
-    #$link = mysqli_connect('localhost', 'root', 'root');
-    $link = mysqli_connect($db_position , $db_benutzername , 'pi$$a', $db_datenbank  );
+    $link = mysqli_connect($db_position, $db_benutzername, 'pi$$a', $db_datenbank);
 
     #Verbindung konnte nicht aufgebaut werden
     if (!$link)
