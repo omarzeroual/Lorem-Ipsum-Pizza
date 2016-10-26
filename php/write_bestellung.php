@@ -1,3 +1,7 @@
+<?php
+# Sesssion starten
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -56,6 +60,7 @@
             <div class="col-sm-8">
                 
 <?php
+print_r($_SESSION);
 # file zum Schreiben der Bestellung.
 
 ### Beteiligte Tabellen 
@@ -437,7 +442,12 @@ mysqli_query($link,    "INSERT INTO tbl_bestellung_produkt
                        
 
 }
-    
+
+// remove all session variables
+session_unset(); 
+
+// destroy the session 
+session_destroy(); 
 ?>         
             </div>
             <div class="col-sm-4"></div>
