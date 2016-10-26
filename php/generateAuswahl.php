@@ -20,16 +20,17 @@ if (!$link)
 }
 
 # SQL Abfrage, um die verfügbaren Produkte, nach Kategorie-ID und Produktpreis sortiert, zu erhalten.
-$sqlProdukt = "SELECT k.bezeichnung AS kBez, k.beschreibung AS kBes, p.ID AS pID, p.bezeichnung AS pBez, p.beschreibung AS pBes, p.preis, p.groesse, p.aktions_preis AS pAktPreis, p.aktions_flag AS pAktFlag
+$sqlProdukt = "SELECT k.bezeichnung AS kBez, k.beschreibung AS kBes, k.reihenfolge AS kReiFo, p.ID AS pID, p.bezeichnung AS pBez, p.beschreibung AS pBes, p.preis, p.groesse, p.aktions_preis AS pAktPreis, p.aktions_flag AS pAktFlag
         FROM tbl_produkte AS p LEFT JOIN tbl_kategorie AS k
         ON p.fk_kategorie = k.ID
         WHERE p.aktiv_flag = 1
-        ORDER BY k.ID ASC, p.preis ASC;";
+        ORDER BY kReiFo ASC, p.preis ASC;";
 
 # SQL Abfrage, um die aktiven Kategorien auszugeben.
-$sqlKategorie = "SELECT k.bezeichnung
+$sqlKategorie = "SELECT k.bezeichnung, k.reihenfolge AS kReiFo
                 FROM tbl_kategorie AS k
-                WHERE k.aktiv_flag = 1;";
+                WHERE k.aktiv_flag = 1
+                ORDER BY kReiFo;";
 
 #Verbindung zur DB konnte aufgebaut werden
 if ($link) {
