@@ -16,7 +16,7 @@
     <!-- Latest compiled JavaScript -->
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
     
 	<title>Lorem Ipsum Pizzakurier</title>
 </head>
@@ -37,13 +37,13 @@
             </div>
             <div class="collapse navbar-collapse" id="mainNav">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="index.html">Home</a></li>
-                    <li><a href="speisekarte.html">Speisekarte</a></li>      
-                    <li><a href="#">Bestellen</a></li>
-                    <li><a href="#">Impressum</a></li>
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="php/speisekarte.php">Speisekarte</a></li>      
+                    <li><a href="php/bestellung_wahl.php">Bestellen</a></li>
+                    <li><a href="html/impressum.html">Impressum</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="form.html">Login</a></li>
+                    <li><a href="html/admin_login.html">Login</a></li>
                 </ul>
             </div>
         </div>
@@ -51,49 +51,31 @@
     
     <!-- Hauptinhalt -->
     <div class="container">
-        <h2>Kontaktdaten</h2>
+        <h3>Willkommen bei loremipsum-Pizza!</h3>
         <div class="row">
             <div class="col-sm-9">
-                <form action="" name="testform" method="post">
-                    <p>Vorname</p>
-                    <input type="text" name="vorname"><br>
-                    <p>Nachname</p>
-                    <input type="text" name="nachname"><br>
-                    <p>Email</p>
-                    <input type="email" name="email"><br>
-                    <p>Telefonnummer</p>
-                    <input type="tel" name="telefonnummer"><br>
-                    <p>Lieferadresse</p>
-                    <textarea rows="2" cols="20" name="lieferadresse"></textarea>
-                </form>
+                
+                <p>Loremipsum-Pizza ist eine Web Applikation im Rahmen der Modulprüfung des Moduls
+                    M133 "Web-Applikation realisieren". </p>
+                <br>
+
+                <p>Ziel dieser Modulprüfung ist es, eine Web-Applikation zu designen, planen, realisieren
+                    und anschliessend zu veröffentlichen. Dazu haben wir einen kompletten Online Webshop
+                    für einen Pizzakurier verwirklicht. In diesem Webshop kann der Kunde seine 
+                    Bestellung vollumfänglich online abwickeln. </p>
+                
+                <br>
+                <p>Dabei wird die komlette Verwaltung des Datenbestandes in einer Datenbank geregelt. 
+                    Zudem wurde für zugriffsberechtigte Administratoren eine Möglichkeit zur Erfassung
+                    neuer Produkte realisiert. </p>
+                
+                <br>
+                <p>Wir wünschen viel Spass in unserem Webshop und bitten um Entschuldigung für das Fehlen
+                    des Pizza-Backens! </p>
             </div>
-            
-            <?php
-                
-                #### Variablen ####
-                    # Rechner, auf dem sich die DB befindet
-                    $db_position = 'localhost';
-                    $db_datenbank = 'loremipsum-pizza';
-                    # Anmeldedaten
-                    $db_benutzername  = 'loremipsum-pizza';
-                    $db_passwort  = 'pi$$a';
-                
-                    # Aufbauen der Datenbank Verbindung
-                    #$link = mysqli_connect('localhost', 'root', 'root');
-                    $link = mysqli_connect($db_position , $db_benutzername , 'pi$$a', $db_datenbank  );
-                    
-                    #Verbindung konnte nicht aufgebaut werden
-                    if (!$link)
-                    {
-                        echo "<p> Verbindung fehlgeschlagen</p>";
-                    }
-
-            </php>
-
-
             <!-- Bestell-Button, um Bestellvorgang aufzurufen -->
             <div class="col-sm-3">
-                <a href="#"><button type="button" class="btn btn-primary btn-block btn-lg" role="button"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Weiter</button></a>
+                <a href="php/bestellung_wahl.php"><button type="button" class="btn btn-primary btn-block btn-lg" role="button"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Bestellen</button></a>
             </div>
         </div>
         <!-- Platzhalter, damit Button in mobile nicht verschwindet -->
