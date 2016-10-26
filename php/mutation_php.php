@@ -65,7 +65,8 @@ $aktionspreis = null;
 if (!empty($_POST['bezeichnung']))
 {
     $bezeichnungAnzeige = $_POST['bezeichnung'];
-    $bezeichnung = utf8_decode($_POST['bezeichnung']);
+    $bezeichnung = utf8_decode(htmlspecialchars($_POST['bezeichnung']));
+
     
 } else {
     $bezeichnung = $_POST['bezeichnung'];
@@ -76,7 +77,7 @@ if (!empty($_POST['bezeichnung']))
 if (!empty($_POST['beschreibung']))
 {
     $beschreibungAnzeige = $_POST['beschreibung'];
-    $beschreibung = utf8_decode($_POST['beschreibung']);
+    $beschreibung = utf8_decode(htmlspecialchars($_POST['beschreibung']));
 
 } else {
     $beschreibung = utf8_decode($_POST['beschreibung']);
@@ -88,7 +89,7 @@ if (!empty($_POST['beschreibung']))
 if (!empty($_POST['groesse']))
 {
     
-    $groesse = utf8_decode($_POST['groesse']);
+    $groesse = utf8_decode(htmlspecialchars($_POST['groesse']));
     $groesseAnzeige = utf8_encode($groesse);
 
 } else {
@@ -101,7 +102,7 @@ if (!empty($_POST['groesse']))
 # ist ein Preis eingegeben worden?
 if (!empty($_POST['preis']))
 {
-    $preis = $_POST['preis'];
+    $preis = htmlspecialchars($_POST['preis']);
 
 } else {
     $db_valid_input = false;
@@ -111,7 +112,7 @@ if (!empty($_POST['preis']))
 # welche Kategorie ist angewählt worden?
 if (!empty($_POST['kategorie']))
 {
-    $kategorie = $_POST['kategorie'];
+    $kategorie = htmlspecialchars($_POST['kategorie']);
     $kategorieAnzeige = $kategorie;
     $kategorie = utf8_decode($kategorie);
     
@@ -124,7 +125,7 @@ if (!empty($_POST['kategorie']))
 # ist das Produkt eine Aktion?
 if (!empty($_POST['radio-wert']))
 {
-    $aktionsflag = $_POST['radio-wert'];
+    $aktionsflag = htmlspecialchars($_POST['radio-wert']);
     if ($aktionsflag =="Ja")
     {
         $aktionsflag = 1;
@@ -140,7 +141,7 @@ if (!empty($_POST['radio-wert']))
 # ist ein Preis eingegeben worden?
 if (!empty($_POST['aktionspreis']))
 {
-    $aktionspreis = $_POST['aktionspreis'];
+    $aktionspreis = htmlspecialchars($_POST['aktionspreis']);
 
 } else {
     $aktionspreis = $_POST['aktionspreis'];

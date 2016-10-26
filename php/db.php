@@ -32,13 +32,13 @@
         
         if (!empty($_POST[benutzername]))
         {
-            $benutzername= $_POST["benutzername"];
+            $benutzername= htmlspecialchars($_POST["benutzername"]);
             $db_valid_input = true;
         } 
 
         if (!empty($_POST["passwort"]))
         {
-            $passwort = $_POST["passwort"];
+            $passwort = htmlspecialchars($_POST["passwort"]);
 
             $db_valid_input = true;
         } else {
