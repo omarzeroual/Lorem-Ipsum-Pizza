@@ -18,14 +18,20 @@
     $fehlerTelefonnummer = 0;
     $fehlerLieferadresse =0;
 
-    if(isset($_POST['weiter'])){
+    //if(isset($_POST['weiter'])){
         $kommtVomFormular = 1;
         
-        $vorname = htmlspecialchars($_POST['name']);
-        $nachname = htmlspecialchars($_POST['vorname']);
-        $email = htmlspecialchars($_POST['email']);
-        $telefon = htmlspecialchars($_POST['telefon']);
-        $lieferadresse = htmlspecialchars($_POST['lieferadresse']);
+        $vorname = htmlspecialchars($_GET['vorname']);
+        $nachname = htmlspecialchars($_GET['nachname']);
+        $email = htmlspecialchars($_GET['email']);
+        $telefonnummer = htmlspecialchars($_GET['telefonnummer']);
+        $lieferadresse = htmlspecialchars($_GET['lieferadresse']);
+
+        echo"$vorname";
+        echo"$nachname";
+        echo"$telefonnummer";
+        echo"$email";
+        echo"$lieferadresse";
 
 
         if($vorname == ''){
@@ -47,18 +53,17 @@
         if($lieferadresse == ''){
             $fehlerLieferadresse = 1;
         }
-    }
+    //}
     
 
     #Auswertung und Ausgabe
 
-    if($fehlerVorname OR $fehlerName OR $fehlerEmail OR $fehlerTelfonnummer OR $fehlerLieferadresse OR ! $kommtVomFormular){
+    if($fehlerVorname OR $fehlerName OR $fehlerEmail OR $fehlerTelfonnummer OR $fehlerLieferadresse){
         ausgebenHead();
         ausgebenFormular();
     }
     else{
         ausgebenHead();
-        echo'<p>eintrag erfolgreich';
         writeDB();
     }
 
@@ -154,24 +159,34 @@
         <h3>Kontaktdaten</h3>
         <div class="row">
             <div class="col-sm-9">
-                <form action="$_SERVER[PHP_SELF]" name="testform" method="post">
+                <form action="$_SERVER[PHP_SELF]" name="testform" method="get">
+                    <div class="form-group">
                     <p>Vorname</p>
-                    <input type="text" name="vorname" id="vorname" value="$vorname" $focusVorname><br>
+                    <input type="text" class="form-control" name="vorname" id="vorname" value="$vorname" $focusVorname><br>
+                    </div>
+                    <div class="form-group">
                     <p>Nachname</p>
-                    <input type="text" name="nachname" id="nachname" value="$nachname" $focusNachname><br>
+                    <input type="text" class="form-control" name="nachname" id="nachname" value="$nachname" $focusNachname><br>
+                    </div>
+                    <div class="form-group">
                     <p>Email</p>
-                    <input type="email" name="email" id="email" value="$email" $focusEmail><br>
+                    <input type="email" class="form-control" name="email" id="email" value="$email" $focusEmail><br>
+                    </div>
+                    <div class="form-group">
                     <p>Telefonnummer</p>
-                    <input type="tel" name="telefonnummer" id="telefonnummer" value="$telefonnummer" $focusTelefonnummer><br>
+                    <input type="tel" class="form-control" name="telefonnummer" id="telefonnummer" value="$telefonnummer" $focusTelefonnummer><br>
+                    </div>
+                    <div class="form-group">
                     <p>Lieferadresse</p>
-                    <textarea rows="2" cols="20" name="lieferadresse" id="lieferadresse" value="$lieferadresse" $focusLieferadresse></textarea>
+                    <textarea rows="2" cols="20" class="form-control" name="lieferadresse" id="lieferadresse" value="$lieferadresse" $focusLieferadresse></textarea>
+                    </div>
+                    <!-- Bestell-Button, um Bestellvorgang aufzurufen -->
+                    <div class="col-sm-3">
+                         <button type="submit" class="btn btn-default" name="weiter">weiter</button>
+                     </div>
+                    </div>
                 </form>
             </div>
-            <!-- Bestell-Button, um Bestellvorgang aufzurufen -->
-            <div class="col-sm-3">
-                <button type="submit" class="btn btn-default" name="weiter">weiter</button>
-            </div>
-        </div>
         <!-- Platzhalter, damit Button in mobile nicht verschwindet -->
         <div class="row">
             <div class="col-sm-12" id="platzHalter">
@@ -247,13 +262,15 @@ function writeDB(){
         echo "<p> Verbindung fehlgeschlagen</p>";
     }
     
-    $sqlClient = "SELECT vorname, nachname, email, telefonnummer, lieferadresse from tbl_kontaktinformationen where vorname = $vorname and nachname = $nachname and telefonnummer = $telefonnummer";
+    $sqlClient = mysqli_query($link, "SELECT vorname, nachname, email, telefonnummer, lieferadresse from tbl_kontaktinformationen where vorname = '$vorname' and nachname = '$nachname' and telefonnummer = '$telefonnummer' and email = '$email' and lieferadresse = '$lieferadresse'");
+    
     
     $evaluationCount = mysqli_num_rows($sqlClient);
     
-    if($evaluationCount = 0){
     
-        mysqli_query($link, "INSERT INTO tbl_kontaktdaten(
+    if($evaluationCount == 0){
+    
+        mysqli_query($link, "INSERT INTO tbl_kontaktinformationen(
                                             vorname
                                             , nachname
                                             , email
@@ -261,14 +278,17 @@ function writeDB(){
                                             , lieferadresse
                                             )
                                     VALUES ( 
-                                            $vorname
-                                            , $nachname
-                                            , $email
-                                            , $telefonnummer
-                                            , $lieferadresse
+                                            '$vorname'
+                                            , '$nachname'
+                                            , '$email'
+                                            , '$telefonnummer'
+                                            , '$lieferadresse'
                                             )
                                             ");
-        }
+        }else{
+        echo"<p>Eintrag nichgt erfolgreich</p>";
+        echo"$evaluationCount";
+    }
     
 }
     
