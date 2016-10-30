@@ -80,13 +80,10 @@ CREATE TABLE `loremipsum-pizza`.`tbl_bestellung_produkt` (
   `fk_bestellung` INT NOT NULL,
   `fk_produkt` INT NOT NULL,
   `menge` INT NOT NULL,
-  PRIMARY KEY (`fk_bestellung`, `fk_produkt`, `menge`),
-  UNIQUE INDEX `fk_bestellung_UNIQUE` (`fk_bestellung` ASC),
-  UNIQUE INDEX `fk_produkt_UNIQUE` (`fk_produkt` ASC),
-  UNIQUE INDEX `menge_UNIQUE` (`menge` ASC),
+  PRIMARY KEY (`fk_bestellung`, `fk_produkt`),
   CONSTRAINT `fk_tbl_bestellung_produkt_tbl_bestellung1`
     FOREIGN KEY (`fk_bestellung`)
-    REFERENCES `loremipsum-pizza`.`tbl_kontaktinformationen` (`ID`)
+    REFERENCES `loremipsum-pizza`.`tbl_bestellung` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_tbl_bestellung_produkt_tbl_speisekarte1`
