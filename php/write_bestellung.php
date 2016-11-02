@@ -67,10 +67,7 @@ $bestellungArray = array();
 $bestellungArray = $_SESSION['auswahl'];
 
 
-{
-    echo "$produktId";
-    echo "$anzahl";
-}
+
 
 
         
@@ -98,7 +95,9 @@ $zeitpunkt = null;
 $fk_informationen = null;
 $gesamtpreis = null;
 $abgeschlossen_flag =  1;
-$zahlungsart = null;
+                
+# Nur Barzahlungen möglich momentan
+$zahlungsart = "Bar";
     
 # Variable für Email-senden
 $emailAbsender ="loremipsum-pizza@mailinator.com";
@@ -117,13 +116,10 @@ $txtInhalt = "";
    
 # Email-Kopf vorbereiten 
 $txtInhalt = "\r\nAbsender: "; 
-echo $txtInhalt;              
-$txtInhalt = $txtInhalt + $emailAbsender;
-echo $txtInhalt;
-echo $emailAbsender;
-$txtInhalt = $txtInhalt + "\r\nEmpfänger:" + " $emailEmpfaenger \r\n";
-$txtInhalt = $txtInhalt + "\r\nBetreff:" + " $emailBetreff \r\n\r\n";
-echo "$txtInhalt";
+              
+$txtInhalt = $txtInhalt . $emailAbsender . "\r\n";
+
+
     
 
 
@@ -131,27 +127,17 @@ echo "$txtInhalt";
 
 $db_valid_input_bestellung = true;
 
-
 # ist ein Kunde eingegeben worden?
-if (!empty($_POST['fk_informationen']))
+if (!empty($_SESSION['Person_ID']))
 {
-    $fk_informationen = utf8_decode($_POST['fk_informationen']);
+    $fk_informationen = utf8_decode($_SESSION['Person_ID']);
+
     
 } else {
 
     $db_valid_input_bestellung = false;
 }
 
-# ist eine Zahlungsart eingegeben worden?
-if (!empty($_POST['zahlungsart']))
-{
-    $zahlungsartAnzeige = $_POST['zahlungsart'];
-    $zahlungsart = utf8_decode($_POST['zahlungsart']);
-    
-} else {
-    $zahlungsartAnzeige = $_POST['zahlungsart'];
-    $db_valid_input_bestellung = false;
-}
 
 
 # Meldung zur erfolgreichen Bestellung ausgeben
@@ -162,9 +148,7 @@ echo    "</div>";
                 
 ### Datenbank-Verbindung
 
-                ### FOR TESTING ONLY
-                $fk_informationen = 7;
-                ######################
+
 $link = mysqli_connect($db_position , $db_benutzername , 'pi$$a', $db_datenbank  );
     
 ### Kontaktdaten der Person holen 
@@ -189,50 +173,31 @@ if (mysqli_num_rows($kontaktDaten) > 0)
         $emailEmpfaenger = $email;
     }
     
+$txtInhalt = $txtInhalt . "\r\nEmpfänger:" . " $emailEmpfaenger \r\n";
+$txtInhalt = $txtInhalt . "\r\nBetreff:" . "/ $emailBetreff \r\n\r\n";
+//printf($txtInhalt);
+    
     $telefonnummer = utf8_encode($row[4]);
     $lieferadresse = utf8_encode($row[5]);
-    $emailInhalt = "<html><body>";
-    $emailInhalt = " Guten Tag, \r\n
-                     Ihre Bestellung wird baldmöglichst geliefert. \r\n\r\n
-                     Bestellungsinfos: \r\n\r\n";
+    $emailInhalt = " Guten Tag \r\n
+                     \r\nIhre Bestellung wird baldmöglichst geliefert. \r\n\r\n
+                     \r\nBestellungsinfos:";
     
-    $emailInhalt = $emailInhalt + "<h2>Kontakdaten</h2>";
-    $emailInhalt = $emailInhalt + "<table>
-                                        <tbody>
-                                            <tr>
-                                                <td>Name: </td>
-                                                <td>$vorname". " $nachname</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Email:</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Telefonnummer:</td>
-                                                <td>$telefonnummer</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Lieferadresse:</td>
-                                                <td>$lieferadresse</td>
-                                            <tr>
-                                        </tbody>
-                                    </table>
-                                    <br>
-                                    <h2>Bestellungs-Informationen</h2>
-                                    <table>
-                                        <tbody>
-                                              <tr>
-                                                <td><strong>Produkt</strong></td>
-                                                <td><strong>Grösse</strong></td>  
-                                                <td><strong>Menge</strong></td>
-                                                <td><strong>Preis</strong></td>
-        
-                                             </tr>";
+    $emailInhalt = $emailInhalt . "\r\nKontaktdaten:";
+    $emailInhalt = $emailInhalt . "\r\nName: \t\t\t\t" . $vorname . " " . $nachname . "\r\n";
+    $emailInhalt = $emailInhalt . "Email: \t\t\t\t" . $email . "\r\n";
+    $emailInhalt = $emailInhalt . "Telefonnummer: \t\t\t" . $telefonnummer . "\r\n";
+    $emailInhalt = $emailInhalt . "Lieferadresse: \t\t\t" . $lieferadresse;
+
+
     
                                        
                                             
     
 
 }
+                
+
 ?>
                 
                 
@@ -243,8 +208,11 @@ $zeitpunkt = date('Y-m-d G:i:s');
 
 
 # txt Name bestimmen
-$txtName = $txtName + "$zeitpunkt";
-$txtOrdnerName = $txtOrdner + txtName + ".txt";
+$zeitpunktFormatted = str_replace(":", "-", $zeitpunkt);
+$zeitpunktFormatted = str_replace(" ", "-", $zeitpunktFormatted);
+$txtName = $txtName . $zeitpunktFormatted;
+
+$txtOrdnerName = $txtOrdnerPfad . $txtName . ".txt";
 
 $array_produkte = array($_POST['produkte']);
 
@@ -292,6 +260,9 @@ $array_produkte = array($_POST['produkte']);
   
 <?php
     
+# Email-Aufbereitung der Tabelle
+$emailInhalt = $emailInhalt . "\r\nProdukt\t\tGrösse\t\tMenge\t\tPreis\r\n\r\n";
+                
 # Jedes Produkt im Array verarbeiten
 foreach($bestellungArray as $produktID => $produktMenge){
     
@@ -322,27 +293,22 @@ foreach($bestellungArray as $produktID => $produktMenge){
     }
     
     # Produkt in die Bestätigung schreiben
-    echo "<tr>";
-    $emailInhalt = $emailInhalt + "<tr>";
-    
     $bezeichnung = utf8_encode($row[1]);
     echo    "<td>$bezeichnung</td>";
-    $emailInhalt = $emailInhalt + "<td>$bezeichnung</td>";
+    $emailInhalt = $emailInhalt . "$bezeichnung\t\t ";
     
     $groesse = utf8_encode($row[3]);
     echo    "<td>$groesse</td>";
-    $emailInhalt = $emailInhalt + "<td>$groesse</td>";
+    $emailInhalt = $emailInhalt . "$groesse\t\t";
     
     echo    "<td>$produktMenge</td>";
-    $emailInhalt = $emailInhalt + "<td>$produktMenge</td>";
+    $emailInhalt = $emailInhalt . "$produktMenge\t\t";
     
     $preisUebersicht = $produktMenge * $produktPreis;
     echo    "<td>$preisUebersicht" . " CHF</td>";
-    $emailInhalt = $emailInhalt + "<td>$preisUebersicht</td>";
+    $emailInhalt = $emailInhalt . "$preisUebersicht CHF\r\n";
     echo "</tr>";
-    $emailInhalt = $emailInhalt + "</tr>
-                                </tbody>
-                            <table><br>";
+
     $gesamtpreis = $gesamtpreis + $preisUebersicht;
     
 }
@@ -377,23 +343,21 @@ foreach($bestellungArray as $produktID => $produktMenge){
     
 <?php
 
-$emailInhalt = $emailInhalt + "<table>
-                                    <tbody>
-                                        <tr>
-                                            <td><strong>Gesamtpreis</strong></td>
-                                            <td>$gesamtpreis<td>
-                                        </tr>
-                                    </tbody>
-                                </table><br><br>";
+$emailInhalt = $emailInhalt . "\r\nGesamtpreis \t\t";
+$emailInhalt = $emailInhalt . "$gesamtpreis CHF";
+                
+$emailInhalt = $emailInhalt . "\r\nVielen Dank für Ihre Bestellung!  
+                               \r\nMit freundlichen Grüssen \r\n\r\n
+                               \r\nDas Loremipsum-Pizza Team";
+                
 
-$emailInhalt = $emailInhalt + "Vielen Dank für Ihre Bestellung!   \r\n\r\n
-                               Mit freundlichen Grüssen \r\n\r\n
-                               Das Loremipsum-Pizza Team";
 ### Eintrag in die Tabelle tbl_bestellung schreiben
 #########TEST###### 
 $db_valid_input_bestellung = true;
+
 if ($link && $db_valid_input_bestellung == true)
 {
+
 
     
 ###Kontaktinformationen holen und email versenden
@@ -413,6 +377,7 @@ if ($link && $db_valid_input_bestellung == true)
                                         
                                         )
                                       " );
+
         
 ### Bestellungs-ID holen
 $bestellungIDHolen = mysqli_query($link, "SELECT ID 
@@ -435,20 +400,21 @@ $bestellungIDHolen = mysqli_query($link, "SELECT ID
 
 #Bestätigungsemail senden
     ##########################test- verwenden wenn kontaktformular da
-    /*
-mail($emailEmpfaenger,
+ /*   
+mail("silvan@bitterli.org",
      $emailBetreff,
      $emailInhalt,
-     "From:$emailAbsender\r\nContent-Type: text/html; charset=UTF-8\r\nReply-To:$emailAbsender",
+     "From:$emailAbsender\r\nContent-Type: text/plain; charset=UTF-8\r\nReply-To:$emailAbsender",
      '-f' . $emailAbsender);
-    */
+  */
+    
     
 # emailInhalt in txt-Inhalt kopieren
-$txtInhalt = $txtInhalt +$emailInhalt;
+$txtInhalt = $txtInhalt . "\r\n" . $emailInhalt;
     
 #Email als txt auf dem Server ablegen
-$txtFile = fopen($txtOrdnerName, "w");
-    echo "$txtInhalt";
+$txtFile = fopen($txtOrdnerName, "w+");
+
 fwrite($txtFile, $txtInhalt);
 fclose($txtFile);
     
