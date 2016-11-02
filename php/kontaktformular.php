@@ -82,28 +82,25 @@
         $focusLieferadresse;
         
         if($kommtVomFormular){
-        
-            echo '<h2>Die Daten sind unvollständig ausgefüllt';
-            echo '<p>Füllen Sie auch die folgenden Felder aus:<br>';
 
             if($fehlerVorname){
-                echo 'Vorname<br>';
+                echo 'Bitte Fülle das Feld Vorname aus<br>';
             }
 
             if($fehlerNachname){
-                echo 'Nachname<br>';
+                echo 'Bitte fülle das Nachname aus<br>';
             }
 
             if($fehlerEmail){
-                echo 'Email<br>';
+                echo 'Bitte fülle das Feld Email aus<br>';
             }
 
             if($fehlerTelefonnummer){
-                echo 'Telefonnummer<br>';
+                echo 'Bitte fülle das Feld Telefonnummer aus<br>';
             }
 
             if($fehlerLieferadresse){
-                echo 'Lieferadresse <br>';
+                echo 'Bitte fülle das Feld Lieferadresse aus<br>';
             }
 
 
