@@ -328,9 +328,10 @@ foreach($bestellungArray as $produktID => $produktMenge){
         <tbody>
         <tr>
             <td><strong>Gesamtpreis</strong></td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td><strong><?php echo $gesamtpreis  ?> CHF</strong></td>
+            <td>&emsp;</td>
+            <td>&emsp;</td>
+            <td>&emsp;</td>
+            <td><strong><?php echo "$gesamtpreis" . " CHF" ?></strong></td>
         </tr>
     </tbody>
 </table>
@@ -449,11 +450,6 @@ foreach($bestellungArray as $produktID => $produktMenge)
 
 }
 
-// remove all session variables
-session_unset(); 
-
-// destroy the session 
-session_destroy(); 
 ?>         
             </div>
             <div class="col-sm-4"></div>
@@ -465,13 +461,17 @@ session_destroy();
         </div>
     </div>
     
-    <!-- Fusszeile -->
-    <div class="navbar navbar-default navbar-fixed-bottom">
-        <div class="container-fluid">
-            <p>Copyright 2016 of omarzeroual &amp; friends</p>        
-        </div>
-    </div>
+    <?php
+     # include footer
+     include '../html/footer.html';
+    ?>
     
 </body>
 </html>
-    
+<?php
+// remove all session variables
+session_unset(); 
+
+// destroy the session 
+session_destroy(); 
+?>
