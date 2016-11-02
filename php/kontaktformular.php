@@ -304,10 +304,7 @@ function writeDB(){
         
         include "write_bestellung.php";
         
-        }else{
-        echo"<p>Eintrag nichgt erfolgreich</p>";
-        echo"$evaluationCount";
-    }
+        }
     
 }
     
