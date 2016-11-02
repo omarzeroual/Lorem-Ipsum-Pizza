@@ -6,9 +6,9 @@ session_start();
 <html lang="de">
 <head>
 	<meta charset="UTF-8">
-    <meta name="description" content="Pizzakurier">
-    <meta name="keywords" content="Pizzakurier">
-    <meta name="author" content="omarzeroual & friends">
+    <meta name="description" content="Loremipsum-Pizza ist eine Web Applikation im Rahmen der Modulprüfung des Moduls 133 'Web-Applikation realisieren' gemäss der ICT-Berufsbildung. Die Umsetzung ist eine Pizzakurier-Website.">
+    <meta name="keywords" content="Pizzakurier, Modul 133, ICT-Berufsbildung, Web-Applikation, Webshop">
+    <meta name="author" content="@omarzeroual, @sabrinder, @silvanbitterli">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     <!-- Latest compiled and minified CSS -->
@@ -22,13 +22,13 @@ session_start();
     
     <link rel="stylesheet" type="text/css" href="../css/style.css">
     
-	<title>Lorem Ipsum Pizzakurier: Bestellung - Bestätigung</title>
+	<title>Loremipsum Pizza: Bestellung - Bestätigung</title>
 </head>
 <body>
     
     <!-- Kopfzeile -->
     <div class="page-header">
-        <h1>Lorem Ipsum <small>Pizzakurier</small></h1>
+        <h1>Loremipsum <small>Pizza</small></h1>
     </div>
     
     <!-- Hauptnavigation -->
@@ -330,7 +330,6 @@ foreach($bestellungArray as $produktID => $produktMenge){
             <td><strong>Gesamtpreis</strong></td>
             <td>&emsp;</td>
             <td>&emsp;</td>
-            <td>&emsp;</td>
             <td><strong><?php echo "$gesamtpreis" . " CHF" ?></strong></td>
         </tr>
     </tbody>
@@ -399,13 +398,12 @@ $bestellungIDHolen = mysqli_query($link, "SELECT ID
 
 
 
-
 mail($emailEmpfaenger,
      $emailBetreff,
      $emailInhalt,
      "From:$emailAbsender\r\nContent-Type: text/plain; charset=UTF-8\r\nReply-To:$emailAbsender",
      '-f' . $emailAbsender);
-  
+
     
     
 # emailInhalt in txt-Inhalt kopieren
