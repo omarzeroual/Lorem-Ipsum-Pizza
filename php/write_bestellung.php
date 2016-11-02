@@ -330,6 +330,8 @@ foreach($bestellungArray as $produktID => $produktMenge){
             <td><strong>Gesamtpreis</strong></td>
             <td>&emsp;</td>
             <td>&emsp;</td>
+            <td>&emsp;</td>
+            <td>&emsp;</td>
             <td><strong><?php echo "$gesamtpreis" . " CHF" ?></strong></td>
         </tr>
     </tbody>
@@ -397,9 +399,7 @@ $bestellungIDHolen = mysqli_query($link, "SELECT ID
     }
 
 
-#Bestätigungsemail senden
-    ##########################test- verwenden wenn kontaktformular da
-   
+
 mail($emailEmpfaenger,
      $emailBetreff,
      $emailInhalt,
