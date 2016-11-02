@@ -1,30 +1,0 @@
-
-Absender: loremipsum-pizza@mailinator.com
-
-Empfänger: Hans@Muster.com 
-
-Betreff: Ihre Bestellung bei Loremipsum-Pizza 
-
-
- Guten Tag 
-
-                     Ihre Bestellung wird baldmöglichst geliefert. 
-
-
-                     Bestellungsinfos:
-Kontaktdaten:
-Name: 				Hans Muster
-Email: 				Hans@Muster.com
-Telefonnummer: 		044 777 44 44
-Lieferadresse: 		Musterstrasse 3, Musterten
-Produkt		Grösse		Menge		Preis
-
-Margherita		 Ø 30cm		1		20 CHF
-
-Gesamtpreis 		20 CHF
-Vielen Dank für Ihre Bestellung!  
-                               
-Mit freundlichen Grüssen 
-
-
-                               Das Loremipsum-Pizza Team
