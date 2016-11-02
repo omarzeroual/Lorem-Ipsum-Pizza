@@ -127,11 +127,11 @@ $txtInhalt = $txtInhalt . $emailAbsender . "\r\n";
 
 $db_valid_input_bestellung = true;
 
-
 # ist ein Kunde eingegeben worden?
-if (!empty($bestellungArray['Person_ID']))
+if (!empty($_SESSION['Person_ID']))
 {
-    $fk_informationen = utf8_decode($bestellungArray['Person_ID']);
+    $fk_informationen = utf8_decode($_SESSION['Person_ID']);
+
     
 } else {
 
