@@ -60,7 +60,21 @@ session_start();
             <div class="col-sm-8">
                 
 <?php
-print_r($_SESSION);
+
+                
+# Bestellungsarray aus der Session holen
+$bestellungArray = array();
+$bestellungArray = $_SESSION['auswahl'];
+
+
+{
+    echo "$produktId";
+    echo "$anzahl";
+}
+
+
+        
+
 # file zum Schreiben der Bestellung.
 
 ### Beteiligte Tabellen 
@@ -99,13 +113,17 @@ $txtOrdnerPfad = "../txt/";
 $txtName= "bestellung_";
 $txtOrdnerName = null;
 # Variable für  Inhalt von .txt-file 
-$txtInhalt = null;
+$txtInhalt = "";
    
 # Email-Kopf vorbereiten 
-$txtInhalt = $txtInhalt + "\r\nAbsender:" . "  $emailAbsender \r\n";
-$txtInhalt = $txtInhalt + "\r\nEmpfänger:" . " $emailEmpfaenger \r\n";
-$txtInhalt = $txtInhalt + "\r\nBetreff:" . " $emailBetreff \r\n\r\n";
-    
+$txtInhalt = "\r\nAbsender: "; 
+echo $txtInhalt;              
+$txtInhalt = $txtInhalt + $emailAbsender;
+echo $txtInhalt;
+echo $emailAbsender;
+$txtInhalt = $txtInhalt + "\r\nEmpfänger:" + " $emailEmpfaenger \r\n";
+$txtInhalt = $txtInhalt + "\r\nBetreff:" + " $emailBetreff \r\n\r\n";
+echo "$txtInhalt";
     
 
 
@@ -144,6 +162,9 @@ echo    "</div>";
                 
 ### Datenbank-Verbindung
 
+                ### FOR TESTING ONLY
+                $fk_informationen = 7;
+                ######################
 $link = mysqli_connect($db_position , $db_benutzername , 'pi$$a', $db_datenbank  );
     
 ### Kontaktdaten der Person holen 
@@ -155,21 +176,21 @@ if ($link)
                                            WHERE ID = '$fk_informationen'" ); 
 }
     
-# schauen, ob es eine Aktion ist
+
 if (mysqli_num_rows($kontaktDaten) > 0)
 {
     $row = mysqli_fetch_row($kontaktDaten);
-    $vorname = $row['vorname'];
-    $nachname = $row['nachname'];
-    $email = $row['email'];
+    $vorname = utf8_encode($row[1]);
+    $nachname = utf8_encode($row[2]);
+    $email = utf8_encode($row[3]);
     
     if ($email != null)
     {
         $emailEmpfaenger = $email;
     }
     
-    $telefonnummer = $row['telefonnummer'];
-    $lieferadresse = $row['lieferadresse'];
+    $telefonnummer = utf8_encode($row[4]);
+    $lieferadresse = utf8_encode($row[5]);
     $emailInhalt = "<html><body>";
     $emailInhalt = " Guten Tag, \r\n
                      Ihre Bestellung wird baldmöglichst geliefert. \r\n\r\n
@@ -219,6 +240,7 @@ if (mysqli_num_rows($kontaktDaten) > 0)
 # Timestamp für den DB-Eintrag holen
 
 $zeitpunkt = date('Y-m-d G:i:s');
+
 
 # txt Name bestimmen
 $txtName = $txtName + "$zeitpunkt";
@@ -271,7 +293,7 @@ $array_produkte = array($_POST['produkte']);
 <?php
     
 # Jedes Produkt im Array verarbeiten
-foreach($array_produkte as $produktID => $produktMenge){
+foreach($bestellungArray as $produktID => $produktMenge){
     
     
     # Produktdaten holen
@@ -282,16 +304,20 @@ foreach($array_produkte as $produktID => $produktMenge){
     # schauen, ob es eine Aktion ist
     if (mysqli_num_rows($produktDaten) > 0)
     {
-     $row = mysqli_fetch_row($sqlResultat);
-     $aktions_flag = $row['aktions_flag'];    
+       
+     $row = mysqli_fetch_row($produktDaten);
+     $aktions_flag = $row[7];  
+    
     }
     
     
     if ($aktions_flag == true)
     {
-        $produktPreis = $row['aktionspreis'];
+ 
+
+        $produktPreis = $row[8];
     } else {
-        $produktPreis = $row['preis'];
+        $produktPreis = $row[4];
         
     }
     
@@ -299,16 +325,16 @@ foreach($array_produkte as $produktID => $produktMenge){
     echo "<tr>";
     $emailInhalt = $emailInhalt + "<tr>";
     
-    $bezeichnung = utf8_encode($row['bezeichnung']);
+    $bezeichnung = utf8_encode($row[1]);
     echo    "<td>$bezeichnung</td>";
     $emailInhalt = $emailInhalt + "<td>$bezeichnung</td>";
     
-    $groesse = utf8_encode($row['groesse']);
+    $groesse = utf8_encode($row[3]);
     echo    "<td>$groesse</td>";
     $emailInhalt = $emailInhalt + "<td>$groesse</td>";
     
-    echo    "<td>$produktmenge</td>";
-    $emailInhalt = $emailInhalt + "<td>$produktmenge</td>";
+    echo    "<td>$produktMenge</td>";
+    $emailInhalt = $emailInhalt + "<td>$produktMenge</td>";
     
     $preisUebersicht = $produktMenge * $produktPreis;
     echo    "<td>$preisUebersicht" . " CHF</td>";
@@ -364,8 +390,11 @@ $emailInhalt = $emailInhalt + "Vielen Dank für Ihre Bestellung!   \r\n\r\n
                                Mit freundlichen Grüssen \r\n\r\n
                                Das Loremipsum-Pizza Team";
 ### Eintrag in die Tabelle tbl_bestellung schreiben
-if ($link && $db_valid_input_kontaktinformationen == true)
+#########TEST###### 
+$db_valid_input_bestellung = true;
+if ($link && $db_valid_input_bestellung == true)
 {
+
     
 ###Kontaktinformationen holen und email versenden
     mysqli_query($link, "INSERT INTO tbl_bestellung
@@ -376,64 +405,76 @@ if ($link && $db_valid_input_kontaktinformationen == true)
                                       , zahlungsart
                                       )
                                VALUES (
-                                         $zeitpunkt
-                                       , $fk_informationen
-                                       , $gesamtpreis
-                                       , $abgeschlossen_flag
-                                       , $zahlungsart
+                                         '$zeitpunkt'
+                                       , '$fk_informationen'
+                                       , '$gesamtpreis'
+                                       , '$abgeschlossen_flag'
+                                       , '$zahlungsart'
                                         
                                         )
                                       " );
         
 ### Bestellungs-ID holen
-$bestellungID = mysqli_query($link, "SELECT ID 
-                                     FROM tbl_bestellung
-                                     WHERE zeitpunkt = '$zeitpunkt'
-                                       AND fk_informationen = '$fk_informationen'
-                                       AND gesamtpreis = '$gesamtpreis'
-                                       AND abgeschlossen_flag = '$abgeschlossen_flag'
-                                       AND zahlungsart = '$zahlungsart'");
+$bestellungIDHolen = mysqli_query($link, "SELECT ID 
+                                          FROM tbl_bestellung
+                                          WHERE zeitpunkt = '$zeitpunkt'
+                                          AND fk_informationen = '$fk_informationen'
+                                          AND gesamtpreis = '$gesamtpreis'
+                                          AND abgeschlossen_flag = '$abgeschlossen_flag'
+                                          AND zahlungsart = '$zahlungsart'");
     
 
+
+    if (mysqli_num_rows($bestellungIDHolen) > 0)
+    {
+
+     $row = mysqli_fetch_row($bestellungIDHolen);
+     $bestellungID = $row[0];    
+    }
+
+
 #Bestätigungsemail senden
+    ##########################test- verwenden wenn kontaktformular da
+    /*
 mail($emailEmpfaenger,
      $emailBetreff,
      $emailInhalt,
      "From:$emailAbsender\r\nContent-Type: text/html; charset=UTF-8\r\nReply-To:$emailAbsender",
      '-f' . $emailAbsender);
+    */
     
 # emailInhalt in txt-Inhalt kopieren
 $txtInhalt = $txtInhalt +$emailInhalt;
     
 #Email als txt auf dem Server ablegen
 $txtFile = fopen($txtOrdnerName, "w");
+    echo "$txtInhalt";
 fwrite($txtFile, $txtInhalt);
 fclose($txtFile);
     
-    if (mysqli_num_rows($produktDaten) > 0)
-    {
-     $row = mysqli_fetch_row($sqlResultat);
-     $bestellungID = $row['ID'];    
-    }
+
 # Für jedes Produkt der Bestellung einen Eintrag in 
 # der Tabelle tbl_bestellung_produkt schreiben
 
-    # Jedes Produkt im Array verarbeiten
-foreach($array_produkte as $produktID => $produktMenge)
+# Jedes Produkt im Array verarbeiten
+foreach($bestellungArray as $produktID => $produktMenge)
+
     {
-        
 
     
-mysqli_query($link,    "INSERT INTO tbl_bestellung_produkt
-                                                        ( fk_bestellung
-                                                        , fk_produkt
-                                                        , menge
-                                                        )
-                                                 VALUES (
-                                                          $bestellungID
-                                                        , $produktID
-                                                        , $produktMenge
-                                                        )");        
+        mysqli_query($link, "INSERT INTO tbl_bestellung_produkt
+                                        ( fk_bestellung
+                                        , fk_produkt
+                                        , menge
+                                        )
+                                        VALUES (
+                                         '$bestellungID'
+                                       , '$produktID'
+                                       , '$produktMenge'
+                                         )"
+                                            );  
+
+            echo mysqli_error($link);
     
 
     

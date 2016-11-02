@@ -32,9 +32,9 @@ INSERT INTO `tbl_benutzer` (`ID`, `benutzername`, `hash`) VALUES
 --
 
 INSERT INTO `tbl_kategorie` (`ID`, `bezeichnung`, `beschreibung`, `aktiv_flag`, `reihenfolge`) VALUES
-(1, 'Pizza', 'Unsere feinen Pizzen werden mit liebe Zubereitet und im Feuer des ewigen Verdammnis ausgebacken.', 1, NULL),
-(2, 'Getränke', 'Wir bringen Ihnen gekühlte Getränke und auf Anfrage auch Becher.', 1, NULL),
-(3, 'Salate', 'Unsere hausgemachten Salate werden Ihnen schmecken!', 1, NULL);
+(1, 'Pizza', 'Unsere feinen Pizzen werden mit liebe Zubereitet und im Feuer des ewigen Verdammnis ausgebacken.', 1, 1),
+(2, 'Getränke', 'Wir bringen Ihnen gekühlte Getränke und auf Anfrage auch Becher.', 1, 3),
+(3, 'Salate', 'Unsere hausgemachten Salate werden Ihnen schmecken!', 1, 2);
 
 --
 -- Daten für Tabelle `tbl_produkte`
