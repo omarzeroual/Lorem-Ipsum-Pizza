@@ -130,12 +130,10 @@
         </div>
     </div>
     
-    <!-- Fusszeile -->
-    <div class="navbar navbar-default navbar-fixed-bottom">
-        <div class="container-fluid">
-            <p>Copyright 2016 of omarzeroual &amp; friends</p>        
-        </div>
-    </div>
+    <?php
+     # include footer
+     include '../html/footer.html';
+    ?>
     
 </body>
 </html>
