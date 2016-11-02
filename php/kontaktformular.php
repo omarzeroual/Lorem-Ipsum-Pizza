@@ -1,6 +1,6 @@
 <?php
         
-    
+    session_start();
     #Variablen initialisieren
 
     $vorname = '';
@@ -21,11 +21,11 @@
     //if(isset($_POST['weiter'])){
         $kommtVomFormular = 1;
         
-        $vorname = htmlspecialchars($_POST['vorname']);
-        $nachname = htmlspecialchars($_POST['nachname']);
-        $email = htmlspecialchars($_GET['email']);
-        $telefonnummer = htmlspecialchars($_POST['telefonnummer']);
-        $lieferadresse = htmlspecialchars($_POST['lieferadresse']);
+        $vorname = utf8_decode(htmlspecialchars($_POST['vorname']));
+        $nachname = utf8_decode(htmlspecialchars($_POST['nachname']));
+        $email = utf8_decode(htmlspecialchars($_POST['email']));
+        $telefonnummer = utf8_decode(htmlspecialchars($_POST['telefonnummer']));
+        $lieferadresse = utf8_decode(htmlspecialchars($_POST['lieferadresse']));
         $form = htmlspecialchars($_SERVER[PHP_SELF]);
 
         if($vorname == ''){
@@ -57,7 +57,7 @@
         ausgebenFormular();
     }
     else{
-        ausgebenHead();
+       // ausgebenHead();
         writeDB();
     }
 
@@ -155,7 +155,7 @@
         <h3>Kontaktdaten</h3>
         <div class="row">
             <div class="col-sm-9">
-                <form action="$form" name="testform" method="get">
+                <form action="$form" name="testform" method="post">
                     <div class="form-group">
                     <p>Vorname</p>
                     <input type="text" class="form-control" name="vorname" id="vorname" value="$vorname" $focusVorname><br>
@@ -264,7 +264,7 @@ function writeDB(){
         echo "<p> Verbindung fehlgeschlagen</p>";
     }
     
-    $sqlClient = mysqli_query($link, "SELECT vorname, nachname, email, telefonnummer, lieferadresse from tbl_kontaktinformationen where vorname = '$vorname' and nachname = '$nachname' and telefonnummer = '$telefonnummer' and email = '$email' and lieferadresse = '$lieferadresse'");
+    $sqlClient = mysqli_query($link, "SELECT vorname, nachname, email, telefonnummer, lieferadresse from tbl_kontaktinformationen WHERE vorname = '$vorname' and nachname = '$nachname' and telefonnummer = '$telefonnummer' and email = '$email' and lieferadresse = '$lieferadresse'");
     
     
     $evaluationCount = mysqli_num_rows($sqlClient);
@@ -287,6 +287,17 @@ function writeDB(){
                                             , '$lieferadresse'
                                             )
                                             ");
+        
+        $sqlID = mysqli_query($link, "SELECT ID from tbl_kontaktinformationen where vorname = '$vorname' and nachname = '$nachname' and telefonnummer = '$telefonnummer' and email = '$email' and lieferadresse = '$lieferadresse'");
+        
+        $row = mysqli_fetch_row($sqlID);
+        
+        $ID = $row[0];
+        
+        $_SESSION["Person_ID"] = $ID;   
+        
+        include "write_bestellung.php";
+        
         }else{
         echo"<p>Eintrag nichgt erfolgreich</p>";
         echo"$evaluationCount";
