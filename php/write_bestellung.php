@@ -398,15 +398,14 @@ $bestellungIDHolen = mysqli_query($link, "SELECT ID
     }
 
 
-#Bestätigungsemail senden
-    ##########################test- verwenden wenn kontaktformular da
- /*   
-mail("silvan@bitterli.org",
+
+
+mail($emailEmpfaenger,
      $emailBetreff,
      $emailInhalt,
      "From:$emailAbsender\r\nContent-Type: text/plain; charset=UTF-8\r\nReply-To:$emailAbsender",
      '-f' . $emailAbsender);
-  */
+  
     
     
 # emailInhalt in txt-Inhalt kopieren
