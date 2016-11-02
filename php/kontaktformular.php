@@ -216,9 +216,9 @@ function ausgebenHead(){
 <html lang="de">
 <head>
 	<meta charset="UTF-8">
-    <meta name="description" content="Pizzakurier">
-    <meta name="keywords" content="Pizzakurier">
-    <meta name="author" content="omarzeroual & friends">
+    <meta name="description" content="Loremipsum-Pizza ist eine Web Applikation im Rahmen der Modulprüfung des Moduls 133 'Web-Applikation realisieren' gemäss der ICT-Berufsbildung. Die Umsetzung ist eine Pizzakurier-Website.">
+    <meta name="keywords" content="Pizzakurier, Modul 133, ICT-Berufsbildung, Web-Applikation, Webshop">
+    <meta name="author" content="@omarzeroual, @sabrinder, @silvanbitterli">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     <!-- Latest compiled and minified CSS -->
@@ -232,7 +232,7 @@ function ausgebenHead(){
     
     <link rel="stylesheet" type="text/css" href="../css/style.css">
     
-	<title>Lorem Ipsum Pizzakurier</title>
+	<title>Loremipsum Pizza: Bestellung - Kundeninformation</title>
 </head>
 <body>
     
