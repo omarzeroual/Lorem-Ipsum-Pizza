@@ -336,9 +336,9 @@ foreach($array_produkte as $produktID => $produktMenge){
         <tbody>
         <tr>
             <td><strong>Gesamtpreis</strong></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>&emsp;</td>
+            <td>&emsp;</td>
+            <td>&emsp;</td>
             <td><strong><?php echo "$gesamtpreis" . " CHF" ?></strong></td>
         </tr>
     </tbody>
