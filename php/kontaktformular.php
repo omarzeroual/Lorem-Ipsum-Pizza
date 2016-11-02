@@ -135,9 +135,9 @@
             </div>
             <div class="collapse navbar-collapse" id="mainNav">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="../index.html">Home</a></li>
+                    <li ><a href="../index.html">Home</a></li>
                     <li><a href="speisekarte.php">Speisekarte</a></li>      
-                    <li><a href="bestellung_wahl.php">Bestellen</a></li>
+                    <li class="active"><a href="#">Bestellen</a></li>
                     <li><a href="../html/impressum.html">Impressum</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
