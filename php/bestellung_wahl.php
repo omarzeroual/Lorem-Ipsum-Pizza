@@ -120,7 +120,7 @@ session_start();
                             
                             # zum nächsten Bestellschritt fortfahren
                             echo    '<script type="text/javascript">
-                                    window.location = "http://loremipsum-pizza.square7.ch/php/write_bestellung.php"
+                                    window.location = "http://loremipsum-pizza.square7.ch/php/kontaktformular.php"
                                     </script>';
                         }
                     }
