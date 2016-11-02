@@ -1,3 +1,7 @@
+<?php
+# Sesssion starten
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -56,8 +60,6 @@
             <div class="col-sm-8">
                 
                 <?php
-                    # Sesssion starten
-                    #session_start();
                 
                     if (empty($_POST)) {         
                         
@@ -107,9 +109,20 @@
                         # Ansicht generieren
                         include "generateAuswahl.php";
                         
-                        echo '<p>Forumlar geschickt!</p>';
-                        echo '<p>Array Grösse: ' .count($_POST). '</p>';
-                        print_r($_POST);
+                        # Wenn keine Fehler vorhanden sind, dann Daten in Session-Storage speichern und Bestellvorgang fortfahren.
+                        if (!$keineAuswahlFehler && !$formatFehler) {
+                            /*echo '<p>Forumlar geschickt!</p>';
+                            echo '<p>Array Grösse: ' .count($_POST). '</p>';
+                            print_r($_POST);*/
+                            
+                            # Array in Session speichern
+                            $_SESSION["auswahl"] = $_POST;
+                            
+                            # zum nächsten Bestellschritt fortfahren
+                            echo    '<script type="text/javascript">
+                                    window.location = "http://loremipsum-pizza.square7.ch/php/write_bestellung.php"
+                                    </script>';
+                        }
                     }
                     
                     /**
