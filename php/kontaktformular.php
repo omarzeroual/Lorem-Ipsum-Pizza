@@ -291,6 +291,9 @@ function writeDB(){
                                             )
                                             ");
         
+        
+        }
+    
         $sqlID = mysqli_query($link, "SELECT ID from tbl_kontaktinformationen where vorname = '$vorname' and nachname = '$nachname' and telefonnummer = '$telefonnummer' and email = '$email' and lieferadresse = '$lieferadresse'");
         
         $row = mysqli_fetch_row($sqlID);
@@ -300,8 +303,6 @@ function writeDB(){
         $_SESSION["Person_ID"] = $ID;   
         
         include "write_bestellung.php";
-        
-        }
     
 }
     
