@@ -222,7 +222,7 @@
                                 <li><a href="#">Impressum</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
-                                <li class="active"><a href="../html/admin_login.html">Login</a></li>
+                                <li class="active"><a href="#">Login</a></li>
                             </ul>
                         </div>
                     </div>
