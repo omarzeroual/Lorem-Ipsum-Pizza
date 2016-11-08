@@ -18,7 +18,7 @@
     $fehlerTelefonnummer = 0;
     $fehlerLieferadresse =0;
 
-    //if(isset($_POST['weiter'])){
+    //if(empty($_POST['weiter'])!==TRUE){
         $kommtVomFormular = 1;
         
         $vorname = utf8_decode(htmlspecialchars($_POST['vorname']));
@@ -270,11 +270,15 @@ function writeDB(){
         echo "<p> Verbindung fehlgeschlagen</p>";
     }
     
-    $sqlClient = mysqli_query($link, "SELECT vorname, nachname, email, telefonnummer, lieferadresse from tbl_kontaktinformationen WHERE vorname = '$vorname' and nachname = '$nachname' and telefonnummer = '$telefonnummer' and email = '$email' and lieferadresse = '$lieferadresse'");
+    $sqlClient = mysqli_query($link, "SELECT ID, vorname, nachname, email, telefonnummer, lieferadresse from tbl_kontaktinformationen WHERE vorname = '$vorname' and nachname = '$nachname' and telefonnummer = '$telefonnummer' and email = '$email' and lieferadresse = '$lieferadresse'");
     
+    $row = mysqli_fetch_row($sqlClient);
+    
+    $ID = $row[0];
+    
+    $_SESSION["Person_ID"] = $ID;
     
     $evaluationCount = mysqli_num_rows($sqlClient);
-    
     
     if($evaluationCount == 0){
     
@@ -302,13 +306,8 @@ function writeDB(){
         
         $_SESSION["Person_ID"] = $ID;   
         
-        include "write_bestellung.php";
-        
-        }else{
-        echo"<p>Eintrag nichgt erfolgreich</p>";
-        echo"$evaluationCount";
-    }
-    
+        }
+    include "write_bestellung.php";
 }
     
 ?>
