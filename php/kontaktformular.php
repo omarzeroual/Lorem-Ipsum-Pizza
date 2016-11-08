@@ -18,7 +18,7 @@
     $fehlerTelefonnummer = 0;
     $fehlerLieferadresse =0;
 
-    //if(isset($_POST['weiter'])){
+    //if(empty($_POST['weiter'])!==TRUE){
         $kommtVomFormular = 1;
         
         $vorname = utf8_decode(htmlspecialchars($_POST['vorname']));
@@ -82,25 +82,28 @@
         $focusLieferadresse;
         
         if($kommtVomFormular){
+        
+            echo '<h2>Die Daten sind unvollständig ausgefüllt';
+            echo '<p>Füllen Sie auch die folgenden Felder aus:<br>';
 
             if($fehlerVorname){
-                echo 'Bitte Fülle das Feld Vorname aus<br>';
+                echo 'Vorname<br>';
             }
 
             if($fehlerNachname){
-                echo 'Bitte fülle das Nachname aus<br>';
+                echo 'Nachname<br>';
             }
 
             if($fehlerEmail){
-                echo 'Bitte fülle das Feld Email aus<br>';
+                echo 'Email<br>';
             }
 
             if($fehlerTelefonnummer){
-                echo 'Bitte fülle das Feld Telefonnummer aus<br>';
+                echo 'Telefonnummer<br>';
             }
 
             if($fehlerLieferadresse){
-                echo 'Bitte fülle das Feld Lieferadresse aus<br>';
+                echo 'Lieferadresse <br>';
             }
 
 
@@ -135,9 +138,9 @@
             </div>
             <div class="collapse navbar-collapse" id="mainNav">
                 <ul class="nav navbar-nav">
-                    <li ><a href="../index.html">Home</a></li>
+                    <li class="active"><a href="../index.html">Home</a></li>
                     <li><a href="speisekarte.php">Speisekarte</a></li>      
-                    <li class="active"><a href="#">Bestellen</a></li>
+                    <li><a href="bestellung_wahl.php">Bestellen</a></li>
                     <li><a href="../html/impressum.html">Impressum</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -267,11 +270,15 @@ function writeDB(){
         echo "<p> Verbindung fehlgeschlagen</p>";
     }
     
-    $sqlClient = mysqli_query($link, "SELECT vorname, nachname, email, telefonnummer, lieferadresse from tbl_kontaktinformationen WHERE vorname = '$vorname' and nachname = '$nachname' and telefonnummer = '$telefonnummer' and email = '$email' and lieferadresse = '$lieferadresse'");
+    $sqlClient = mysqli_query($link, "SELECT ID, vorname, nachname, email, telefonnummer, lieferadresse from tbl_kontaktinformationen WHERE vorname = '$vorname' and nachname = '$nachname' and telefonnummer = '$telefonnummer' and email = '$email' and lieferadresse = '$lieferadresse'");
     
+    $row = mysqli_fetch_row($sqlClient);
+    
+    $ID = $row[0];
+    
+    $_SESSION["Person_ID"] = $ID;
     
     $evaluationCount = mysqli_num_rows($sqlClient);
-    
     
     if($evaluationCount == 0){
     
@@ -291,9 +298,6 @@ function writeDB(){
                                             )
                                             ");
         
-        
-        }
-    
         $sqlID = mysqli_query($link, "SELECT ID from tbl_kontaktinformationen where vorname = '$vorname' and nachname = '$nachname' and telefonnummer = '$telefonnummer' and email = '$email' and lieferadresse = '$lieferadresse'");
         
         $row = mysqli_fetch_row($sqlID);
@@ -302,8 +306,8 @@ function writeDB(){
         
         $_SESSION["Person_ID"] = $ID;   
         
-        include "write_bestellung.php";
-    
+        }
+    include "write_bestellung.php";
 }
     
 ?>
