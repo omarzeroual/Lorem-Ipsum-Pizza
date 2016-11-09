@@ -1,22 +1,24 @@
        
 <?php
 
-
+/* PHP Code für das Login eines
+   Admin-Benutzers
+*/
 	#### Variablen ####
 	# Rechner, auf dem sich die DB befindet
 	$db_position = 'localhost';
 	$db_datenbank = 'loremipsum-pizza';
-	# Anmeldedaten
+
+	# Anmeldedaten für die Datenbank
 	$db_benutzername  = 'loremipsum-pizza';
 	$db_passwort  = 'pi$$a';
     $db_valid_input = false;
     
     #Variablen zur Datensicherheit
     $salt = "jhgj56uth";
-	#phpinfo();
+
 	
 	# Aufbauen der Datenbank Verbindung
-	#$link = mysqli_connect('localhost', 'root', 'root');
 	$link = mysqli_connect($db_position , $db_benutzername , 'pi$$a', $db_datenbank  );
 
 	
@@ -30,6 +32,7 @@
 	if ($link)
 	{
         
+        # Input Validierung des Benutzernamen und Passwortes
         if (!empty($_POST[benutzername]))
         {
             $benutzername= htmlspecialchars($_POST["benutzername"]);
@@ -54,6 +57,7 @@
             
           
         # SQL Query für die DB-Abfrage
+        # --> Gibt es den Admin-Benutzer
             
         $sqlResultat = mysqli_query($link,"SELECT *
                                            FROM tbl_benutzer
@@ -62,10 +66,15 @@
             
         $sqlAnzahl = mysqli_num_rows($sqlResultat);
 
+            # Login war erfolgreich
+            # --> Mutation möglich
         
             if ($sqlAnzahl > 0)
             {
                 include 'mutation_site.php';
+                
+            # Login war nicht erfolgreich
+            # --> Mutation nicht möglich
             } else {
                ?>
 
@@ -162,6 +171,8 @@
     
             } 
             
+        # ungültiger Input
+        # Login neu aufbauen
             
         } else {
             
@@ -211,7 +222,7 @@
                                 <li><a href="#">Impressum</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
-                                <li class="active"><a href="../html/admin_login.html">Login</a></li>
+                                <li class="active"><a href="#">Login</a></li>
                             </ul>
                         </div>
                     </div>
@@ -235,7 +246,7 @@
                                 <input type="password" class="form-control" name="passwort" id="passwort">
                           </div>
 
-                        <button type="submit" class="btn btn-primary" name="einloggen">einloggen</button>
+                        <button type="submit" class="btn btn-default" name="einloggen">einloggen</button>
                     </form>
                     </div>
                     <!-- Bestell-Button, um Bestellvorgang aufzurufen -->
@@ -262,16 +273,9 @@
             <?php
             
         }
-
-
-            
+      
     }
     
-        
-               
-		
-    
-    
-
+      
 ?>
 

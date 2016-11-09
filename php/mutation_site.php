@@ -1,3 +1,6 @@
+
+<!-- Seite zum Einfügen eines Produktes -->
+
 <!DOCTYPE html>
             <html lang="de">
             <head>
@@ -42,7 +45,7 @@
                                 <li><a href="../html/impressum.html">Impressum</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
-                                <li class="active"><a href="../html/admin_login.html">Login</a></li>
+                                <li class="active"><a href="#">Login</a></li>
                             </ul>
                         </div>
                     </div>
@@ -73,17 +76,24 @@
                     <div class="form-group">
                         <label for="kategorie">Produkt-Kategorie</label>
                         <select class="form-control" id="kategorie" name="kategorie">
+                            
                         <?php
+                            
                         	# Rechner, auf dem sich die DB befindet
 	                       $db_position = 'localhost';
 	                       $db_datenbank = 'loremipsum-pizza';
-	                       # Anmeldedaten
+                            
+	                       # Anmeldedaten für die Datenbank
 	                       $db_benutzername  = 'loremipsum-pizza';
 	                       $db_passwort  = 'pi$$a';
                         
+                        #Verbindung zur Datenbank aufbauen
                         $link = mysqli_connect($db_position , $db_benutzername , 'pi$$a', $db_datenbank  );
+                            
+                        # Verbindung konnte aufgebaut werden
                         if ($link)
                         {
+                            # statement zum schauen, ob es den Admin-Benutzer gibt
                             $sqlResultat = mysqli_query($link,"SELECT bezeichnung
                                            FROM tbl_kategorie
                                            WHERE aktiv_flag = '1'");
@@ -113,8 +123,8 @@
                     </div>
                     
 
-                      <button type="submit" class="btn btn-primary" name="einfuegen">Einfügen</button>
-                      <a href="mutation_site.php" class="btn btn-primary" role="button" name="leeren">Formular leeren</a>
+                      <button type="submit" class="btn btn-default" name="einfuegen">Einfügen</button>
+                      <a href="mutation_site.php" class="btn btn-default" role="button" name="leeren">Formular leeren</a>
 
             </form>
             </div>

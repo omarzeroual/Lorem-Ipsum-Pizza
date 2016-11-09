@@ -1,4 +1,7 @@
 <?php
+
+# Script zum verarbeiten der Bestellung
+
 # Sesssion starten
 session_start();
 ?>
@@ -67,24 +70,12 @@ $bestellungArray = array();
 $bestellungArray = $_SESSION['auswahl'];
 
 
-
-
-
-        
-
-# file zum Schreiben der Bestellung.
-
-### Beteiligte Tabellen 
-#   - tbl_produkte
-#   - tbl_bestellung
-#   - tbl_bestellung_produkte
-#   - tbl_kontaktinformationen
-
 # Rechner, auf dem sich die DB befindet
 	                       
 $db_position = 'localhost';
-$db_datenbank = 'loremipsum-pizza';	                       
-# Anmeldedaten
+$db_datenbank = 'loremipsum-pizza';	
+                
+# Anmeldedaten für die Datenbank
 $db_benutzername  = 'loremipsum-pizza';
 
 
@@ -99,7 +90,7 @@ $abgeschlossen_flag =  1;
 # Nur Barzahlungen möglich momentan
 $zahlungsart = "Bar";
     
-# Variable für Email-senden
+# Variablen für Email-senden
 $emailAbsender ="loremipsum-pizza@mailinator.com";
 $emailBetreff = "Ihre Bestellung bei Loremipsum-Pizza";
 $emailEmpfaenger = null;
@@ -183,6 +174,7 @@ $txtInhalt = $txtInhalt . "\r\nBetreff:" . "/ $emailBetreff \r\n\r\n";
                      \r\nIhre Bestellung wird baldmöglichst geliefert. \r\n\r\n
                      \r\nBestellungsinfos:";
     
+    # Email-Inhalt aufbereiten
     $emailInhalt = $emailInhalt . "\r\nKontaktdaten:";
     $emailInhalt = $emailInhalt . "\r\nName: \t\t\t\t" . $vorname . " " . $nachname . "\r\n";
     $emailInhalt = $emailInhalt . "Email: \t\t\t\t" . $email . "\r\n";
@@ -331,6 +323,7 @@ foreach($bestellungArray as $produktID => $produktMenge){
             <td>&emsp;</td>
             <td>&emsp;</td>
             <td>&emsp;</td>
+            <td>&emsp;</td>
             <td><strong><?php echo "$gesamtpreis" . " CHF" ?></strong></td>
         </tr>
     </tbody>
@@ -343,6 +336,7 @@ foreach($bestellungArray as $produktID => $produktMenge){
     
 <?php
 
+# Email-Inhalt aufbereiten
 $emailInhalt = $emailInhalt . "\r\nGesamtpreis \t\t";
 $emailInhalt = $emailInhalt . "$gesamtpreis CHF";
                 
@@ -352,8 +346,6 @@ $emailInhalt = $emailInhalt . "\r\nVielen Dank für Ihre Bestellung!
                 
 
 ### Eintrag in die Tabelle tbl_bestellung schreiben
-#########TEST###### 
-$db_valid_input_bestellung = true;
 
 if ($link && $db_valid_input_bestellung == true)
 {
@@ -390,6 +382,7 @@ $bestellungIDHolen = mysqli_query($link, "SELECT ID
     
 
 
+    # ID der Bestellung holen
     if (mysqli_num_rows($bestellungIDHolen) > 0)
     {
 
@@ -398,9 +391,8 @@ $bestellungIDHolen = mysqli_query($link, "SELECT ID
     }
 
 
-#Bestätigungsemail senden
-    ##########################test- verwenden wenn kontaktformular da
-   
+
+# Mail mit Inhalt an den Besteller senden
 mail($emailEmpfaenger,
      $emailBetreff,
      $emailInhalt,
@@ -439,14 +431,9 @@ foreach($bestellungArray as $produktID => $produktMenge)
                                        , '$produktMenge'
                                          )"
                                             );  
-
-            echo mysqli_error($link);
-    
-
     
     }
-    
-                       
+                           
 
 }
 

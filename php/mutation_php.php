@@ -38,12 +38,12 @@
             <div class="collapse navbar-collapse" id="mainNav">
                 <ul class="nav navbar-nav">
                     <li><a href="..\html\index.html">Home</a></li>
-                    <li><a href="..\html\speisekarte.html">Speisekarte</a></li>      
+                    <li><a href="speisekarte.php">Speisekarte</a></li>      
                     <li><a href="bestellung_wahl.php">Bestellen</a></li>
                     <li><a href="../html/impressum.html">Impressum</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="active"><a href="..\html\admin_login.html">Login</a></li>
+                    <li class="active"><a href="#">Login</a></li>
                 </ul>
             </div>
         </div>
@@ -151,20 +151,23 @@ if (!empty($_POST['aktionspreis']))
 
 # Input-Validation Ende
 
-# DB-Check - gibt es das Produkt in dieser Grösse bereits?
 
-# Rechner, auf dem sich die DB befindet
-	                       
+
+# Rechner, auf dem sich die DB befindet	                       
 $db_position = 'localhost';
-$db_datenbank = 'loremipsum-pizza';	                       
-# Anmeldedaten
+$db_datenbank = 'loremipsum-pizza';	 
+    
+# Anmeldedaten für die Datenbank
 $db_benutzername  = 'loremipsum-pizza';
 
     if ($db_valid_input == true)
     {
         
   
+    # Verbindung aufbauen
     $link = mysqli_connect($db_position , $db_benutzername , 'pi$$a', $db_datenbank  );
+        
+        # Verbindung konnte aufgebaut werden
         if ($link)
             {
                 # Ist der Datensatz bereits vorhanden
@@ -180,7 +183,7 @@ $db_benutzername  = 'loremipsum-pizza';
                     if ($sqlAnzahl > 0)
                     {
                         # gefülltes Formular nochmals ausgeben
-                        # -- Meldung: bereits vorhanden
+                        # --> Meldung: bereits vorhanden
                                 ?>
                                     <!-- Hauptinhalt -->
                         <div class="container">
@@ -265,8 +268,8 @@ $db_benutzername  = 'loremipsum-pizza';
                                         </div>
 
 
-                                <button type="submit" class="btn btn-primary" name="einfuegen">Einfügen</button>
-                                <a href="mutation_site.php" class="btn btn-primary" role="button" name="leeren">Formular leeren</a>
+                                <button type="submit" class="btn btn-default" name="einfuegen">Einfügen</button>
+                                <a href="mutation_site.php" class="btn btn-default" role="button" name="leeren">Formular leeren</a>
 
                                 </form>
                                 </div>
@@ -285,7 +288,7 @@ $db_benutzername  = 'loremipsum-pizza';
                                                               
                     } else {
 
-                        #Fremdschlüsselwert holen
+                        #Fremdschlüsselwert für DB-Eintrag holen
    
                          $sqlFK = mysqli_query($link,"SELECT ID 
                                                       FROM tbl_kategorie
@@ -383,6 +386,8 @@ $db_benutzername  = 'loremipsum-pizza';
 
             }
         } else {
+        
+        # Input nicht valid
             
         
         ?>
@@ -475,8 +480,8 @@ $db_benutzername  = 'loremipsum-pizza';
                     </div>
                     
 
-                    <button type="submit" class="btn btn-primary" name="einfuegen">Einfügen</button>
-                    <a href="mutation_php.php" class="btn btn-primary" role="button" name="leeren">Formular leeren</a>
+                    <button type="submit" class="btn btn-default" name="einfuegen">Einfügen</button>
+                    <a href="mutation_php.php" class="btn btn-default" role="button" name="leeren">Formular leeren</a>
 
             </form>
             </div>
