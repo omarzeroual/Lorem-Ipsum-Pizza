@@ -18,7 +18,7 @@
     $fehlerTelefonnummer = 0;
     $fehlerLieferadresse =0;
 
-    //if(empty($_POST['weiter'])!==TRUE){
+  #Überprüfung des Inputs auf leere Felder
         $kommtVomFormular = 1;
         
         $vorname = utf8_decode(htmlspecialchars($_POST['vorname']));
@@ -47,7 +47,6 @@
         if($lieferadresse == ''){
             $fehlerLieferadresse = 1;
         }
-  // }
     
 
     #Auswertung und Ausgabe
@@ -82,9 +81,6 @@
         $focusLieferadresse;
         
         if($kommtVomFormular){
-        
-            echo '<h2>Die Daten sind unvollständig ausgefüllt';
-            echo '<p>Füllen Sie auch die folgenden Felder aus:<br>';
 
             if($fehlerVorname){
                 echo 'Vorname<br>';
@@ -270,6 +266,8 @@ function writeDB(){
         echo "<p> Verbindung fehlgeschlagen</p>";
     }
     
+    #Überprüfung ob Eintrag schon in Tabelle vorhanden
+    
     $sqlClient = mysqli_query($link, "SELECT ID, vorname, nachname, email, telefonnummer, lieferadresse from tbl_kontaktinformationen WHERE vorname = '$vorname' and nachname = '$nachname' and telefonnummer = '$telefonnummer' and email = '$email' and lieferadresse = '$lieferadresse'");
     
     $row = mysqli_fetch_row($sqlClient);
@@ -279,6 +277,8 @@ function writeDB(){
     $_SESSION["Person_ID"] = $ID;
     
     $evaluationCount = mysqli_num_rows($sqlClient);
+    
+    #Falls Eintrag nicht in Tabele vorhanden wird Eintrag geschrieben
     
     if($evaluationCount == 0){
     
@@ -297,7 +297,7 @@ function writeDB(){
                                             , '$lieferadresse'
                                             )
                                             ");
-        
+        #Auslesen der ID für Weitergabe an Bestätigungsformular
         $sqlID = mysqli_query($link, "SELECT ID from tbl_kontaktinformationen where vorname = '$vorname' and nachname = '$nachname' and telefonnummer = '$telefonnummer' and email = '$email' and lieferadresse = '$lieferadresse'");
         
         $row = mysqli_fetch_row($sqlID);
