@@ -238,7 +238,7 @@ function ausgebenHead(){
     
     <!-- Kopfzeile -->
     <div class="page-header">
-        <h1>Lorem Ipsum <small>Pizzakurier</small></h1>
+        <h1>Loremipsum <small>Pizza</small></h1>
     </div>
 ENDE_HEAD;
 }
